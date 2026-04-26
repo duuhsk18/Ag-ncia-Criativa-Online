@@ -1,0 +1,1223 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<title>Agência Criativa — Transformamos presença digital em crescimento real</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="description" content="Estruturas digitais completas para negócios que querem crescer de verdade."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<!-- Supabase JS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<!-- Meta Pixel (substituir SEU_PIXEL_ID) -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+// fbq('init', 'SEU_PIXEL_ID'); // descomente e substitua após ter o Pixel
+// fbq('track', 'PageView');
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:#0D0D0D;color:#F8F8F8;font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+
+@font-face{font-family:'Space Grotesk';src:url('./fonts/SpaceGrotesk-Light.ttf') format('truetype');font-weight:300;font-display:swap;}
+@font-face{font-family:'Space Grotesk';src:url('./fonts/SpaceGrotesk-Regular.ttf') format('truetype');font-weight:400;font-display:swap;}
+@font-face{font-family:'Space Grotesk';src:url('./fonts/SpaceGrotesk-Medium.ttf') format('truetype');font-weight:500;font-display:swap;}
+@font-face{font-family:'Space Grotesk';src:url('./fonts/SpaceGrotesk-SemiBold.ttf') format('truetype');font-weight:600;font-display:swap;}
+@font-face{font-family:'Space Grotesk';src:url('./fonts/SpaceGrotesk-Bold.ttf') format('truetype');font-weight:700 900;font-display:swap;}
+
+:root{
+  --bg:#0D0D0D; --bg-light:#F4F4F2; --s1:#1A1A1A; --s2:#242424;
+  --fg:#F8F8F8; --fg-2:#C7C7C7; --fg-3:#9A9A9A;
+  --accent:#FF6B00; --green:#00E676;
+  --v-bg:#0A1628; --v-violet:#9B6BFF; --v-border:rgba(155,107,255,0.22);
+  --ease:cubic-bezier(0.22,1,0.36,1);
+  --container:1280px;
+}
+
+/* ── Keyframes ── */
+@keyframes fadeUp  {from{opacity:0;transform:translateY(36px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn  {from{opacity:0}to{opacity:1}}
+@keyframes scaleIn {from{opacity:0;transform:scale(1.05)}to{opacity:1;transform:scale(1)}}
+@keyframes lineW   {from{width:0}to{width:60px}}
+@keyframes pulse   {0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-5px)}}
+
+/* ── Load ── */
+.load-0{animation:fadeUp .9s var(--ease) 0s   both}
+.load-1{animation:fadeUp .9s var(--ease) .12s both}
+.load-2{animation:fadeUp .9s var(--ease) .24s both}
+.load-3{animation:fadeUp .9s var(--ease) .38s both}
+.load-4{animation:fadeUp .9s var(--ease) .52s both}
+.load-img{animation:scaleIn 1.1s var(--ease) .1s both}
+.load-line{animation:lineW .8s var(--ease) .55s both}
+
+/* ── Scroll reveal ── */
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .75s var(--ease),transform .75s var(--ease);}
+.reveal.shown{opacity:1;transform:translateY(0);}
+.reveal-l{opacity:0;transform:translateX(-40px);transition:opacity .75s var(--ease),transform .75s var(--ease);}
+.reveal-l.shown{opacity:1;transform:translateX(0);}
+.reveal-r{opacity:0;transform:translateX(40px);transition:opacity .75s var(--ease),transform .75s var(--ease);}
+.reveal-r.shown{opacity:1;transform:translateX(0);}
+.reveal-scale{opacity:0;transform:scale(1.04);transition:opacity .85s var(--ease),transform .85s var(--ease);}
+.reveal-scale.shown{opacity:1;transform:scale(1);}
+.d1{transition-delay:.08s!important} .d2{transition-delay:.16s!important}
+.d3{transition-delay:.24s!important} .d4{transition-delay:.32s!important}
+.d5{transition-delay:.40s!important}
+
+/* ── Nav ── */
+.nav{position:fixed;top:0;left:0;right:0;z-index:80;height:72px;display:flex;align-items:center;background:transparent;transition:background .3s var(--ease),border-color .3s;border-bottom:1px solid transparent;}
+.nav.scrolled{background:rgba(13,13,13,0.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-color:rgba(255,255,255,0.07);}
+.nav__inner{max-width:var(--container);width:100%;margin:0 auto;padding:0 40px;display:flex;align-items:center;justify-content:space-between;gap:24px;}
+.nav__logo{display:flex;align-items:center;gap:10px;text-decoration:none;cursor:pointer;}
+/* Logo: JS controla filter+mixBlendMode via applyNavTheme() */
+.nav__logo img{height:32px;width:auto;transition:filter .3s var(--ease);}
+/* Texto Agência: escuro no hero claro, branco no fundo escuro */
+.nav__logo-text{font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:17px;letter-spacing:-0.02em;color:#0D0D0D;transition:color .3s var(--ease);}
+.nav.scrolled .nav__logo-text{color:#F8F8F8;}
+.nav.dark-hero .nav__logo-text{color:#F8F8F8;}
+.nav__logo-text span{color:#FF6B00;}
+.nav__links{display:flex;align-items:center;gap:28px;}
+/* Links: semi-escuros no hero misto, claros no fundo escuro */
+.nav__link{font-size:13.5px;font-weight:500;color:rgba(13,13,13,0.65);text-decoration:none;padding-bottom:2px;border-bottom:1px solid transparent;transition:color .2s var(--ease),border-color .15s;cursor:pointer;background:none;border-top:0;border-left:0;border-right:0;font-family:'Inter',sans-serif;}
+.nav.scrolled .nav__link{color:#C7C7C7;}
+.nav.dark-hero .nav__link{color:#C7C7C7;}
+.nav__link:hover{color:#FF6B00;border-bottom-color:#FF6B00;}
+.nav__link.active{color:#FF6B00;border-bottom-color:#FF6B00;}
+.nav.scrolled .nav__link:hover{color:#F8F8F8;border-bottom-color:#FF6B00;}
+.nav.scrolled .nav__link.active{color:#F8F8F8;border-bottom-color:#FF6B00;}
+.nav.dark-hero .nav__link:hover{color:#F8F8F8;border-bottom-color:#FF6B00;}
+.nav.dark-hero .nav__link.active{color:#F8F8F8;border-bottom-color:#FF6B00;}
+.nav__cta{font-family:'Inter',sans-serif;font-weight:600;font-size:14px;background:#FF6B00;color:#0D0D0D;border:0;border-radius:999px;padding:11px 20px;cursor:pointer;box-shadow:inset 0 1px 0 rgba(255,255,255,0.18),0 6px 20px -6px rgba(255,107,0,0.5);transition:background .2s,transform .15s;white-space:nowrap;}
+.nav__cta:hover{background:#FF8024;transform:translateY(-1px);}
+
+/* ── Buttons ── */
+.btn{display:inline-flex;align-items:center;gap:8px;border-radius:999px;font-family:'Inter',sans-serif;font-weight:600;font-size:15px;cursor:pointer;border:0;transition:all .2s var(--ease);text-decoration:none;padding:13px 24px;}
+.btn-primary{background:#FF6B00;color:#0D0D0D;box-shadow:inset 0 1px 0 rgba(255,255,255,0.18),0 8px 24px -8px rgba(255,107,0,0.55);}
+.btn-primary:hover{background:#FF8024;transform:translateY(-2px);box-shadow:inset 0 1px 0 rgba(255,255,255,0.22),0 12px 32px -8px rgba(255,107,0,0.65);}
+.btn-secondary{background:transparent;color:#F8F8F8;border:1.5px solid rgba(255,255,255,0.22);}
+.btn-secondary:hover{border-color:rgba(255,255,255,0.5);transform:translateY(-2px);}
+.btn-dark{background:transparent;color:#0D0D0D;border:1.5px solid rgba(0,0,0,0.22);}
+.btn-dark:hover{border-color:rgba(0,0,0,0.5);transform:translateY(-2px);}
+.btn-vision{background:linear-gradient(135deg,#9B6BFF,#6C3FC7);color:#fff;box-shadow:0 12px 36px -10px rgba(155,107,255,0.55);}
+.btn-vision:hover{box-shadow:0 16px 40px -8px rgba(155,107,255,0.7);transform:translateY(-2px);}
+
+/* ── Kicker + Line ── */
+.kicker{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#FF6B00;}
+.kicker-v{color:#9B6BFF;}
+.kicker-dk{color:#FF6B00;}
+.section-line{height:2px;background:#FF6B00;margin-bottom:20px;}
+.section-line-v{height:2px;background:#9B6BFF;margin-bottom:20px;}
+
+/* ── Hero ── */
+.hero{position:relative;min-height:100vh;display:grid;grid-template-columns:55fr 45fr;}
+.hero__left{background:#F4F4F2;display:flex;flex-direction:column;justify-content:center;padding:120px 56px 80px 40px;position:relative;z-index:2;}
+.hero__inner{max-width:580px;margin-left:auto;}
+.hero__h1{font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:clamp(44px,5.5vw,76px);line-height:1.0;letter-spacing:-0.03em;color:#0D0D0D;}
+.hero__h1 span{color:#FF6B00;}
+.hero__lead{font-size:17px;line-height:1.65;color:#4A4A4A;margin-top:22px;max-width:480px;}
+.hero__actions{display:flex;gap:12px;margin-top:34px;flex-wrap:wrap;}
+.hero__stats{display:flex;gap:36px;margin-top:52px;padding-top:36px;border-top:1px solid rgba(0,0,0,0.1);flex-wrap:wrap;}
+.stat__n{font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:38px;color:#0D0D0D;letter-spacing:-0.03em;line-height:1;}
+.stat__l{font-size:12px;color:#7A7A7A;margin-top:5px;max-width:140px;line-height:1.4;}
+/* hero right — watermark only */
+.hero__right{position:relative;overflow:hidden;background:#0D0D0D;}
+.hero__right::before{content:'';position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:linear-gradient(to right,#F4F4F2 0%,rgba(244,244,242,0.6) 16%,rgba(244,244,242,0) 42%);}
+.hero__wm{position:absolute;inset:0;z-index:1;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.hero__wm img{width:92%;height:92%;object-fit:contain;filter:invert(1);mix-blend-mode:screen;opacity:.12;transform:scale(1.08) translateX(8%);}
+
+/* ── Services grid ── */
+.svc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,0.06);}
+.svc-card{background:#0D0D0D;padding:38px 30px;border-top:2px solid transparent;transition:border-color .3s,background .3s;cursor:pointer;}
+.svc-card:hover{background:#141414;border-color:#FF6B00;}
+.svc-icon{width:46px;height:46px;border-radius:14px;background:rgba(255,107,0,0.1);display:flex;align-items:center;justify-content:center;color:#FF6B00;margin-bottom:18px;}
+.svc-tag{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#FF6B00;margin-bottom:8px;}
+.svc-h{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:19px;color:#F8F8F8;margin-bottom:10px;}
+.svc-p{font-size:14px;line-height:1.65;color:#9A9A9A;}
+
+/* ── Stats band ── */
+.stats-band{background:#FF6B00;padding:52px 40px;}
+.stats-band__inner{max-width:var(--container);margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;}
+.stats-n{font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:46px;color:#0D0D0D;letter-spacing:-0.03em;line-height:1;}
+.stats-l{font-size:13px;color:rgba(0,0,0,0.6);margin-top:5px;}
+
+/* ── Section full-width text ── */
+.sec-full{padding:80px 40px;}
+.sec-full .inner{max-width:var(--container);margin:0 auto;}
+.sec-h{font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:clamp(32px,4vw,52px);letter-spacing:-0.02em;line-height:1.05;}
+.check-list{list-style:none;margin-top:24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px 32px;}
+.check-list li{display:flex;align-items:flex-start;gap:12px;font-size:15px;line-height:1.55;color:#C7C7C7;}
+.check-list--dk li{color:#3A3A3A;}
+.ci{width:20px;height:20px;border-radius:50%;background:rgba(0,230,118,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.cd{width:7px;height:7px;border-radius:50%;background:#00E676;}
+
+/* ── VISION hero-section ── */
+.vision-sec{position:relative;overflow:hidden;padding:100px 40px 80px;background:linear-gradient(160deg,#0A1628 0%,#12093A 55%,#1A0A2E 100%);}
+.vision-sec__bg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;overflow:hidden;}
+.vision-sec__bg-text{font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:clamp(120px,22vw,340px);color:rgba(155,107,255,0.055);letter-spacing:-0.06em;line-height:1;user-select:none;white-space:nowrap;}
+.vision-sec__glow{position:absolute;inset:0;background:radial-gradient(ellipse at 65% 30%,rgba(155,107,255,0.3),transparent 60%);pointer-events:none;}
+.vision-sec__inner{max-width:960px;margin:0 auto;position:relative;z-index:2;}
+.vision-chips{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:40px;}
+.vision-chip{background:rgba(20,12,50,0.65);backdrop-filter:blur(12px);border:1px solid rgba(155,107,255,0.25);border-radius:14px;padding:16px 18px;text-align:center;}
+.vision-chip span{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14px;color:#fff;}
+
+/* ── Split (kept for savings section) ── */
+.split{display:grid;grid-template-columns:1fr 1fr;min-height:520px;}
+.split__img{position:relative;overflow:hidden;min-height:460px;}
+.split__img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 8s ease;}
+.split__img:hover img{transform:scale(1.04);}
+.split__overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(13,13,13,0.4),transparent 70%);}
+.split__text{display:flex;flex-direction:column;justify-content:center;padding:72px 56px;}
+.split__h{font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:clamp(30px,3.2vw,44px);letter-spacing:-0.02em;line-height:1.05;}
+
+/* ── Plans grid ── */
+.plans-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.plan-card{background:#141414;border:1px solid rgba(255,255,255,0.07);border-radius:20px;padding:30px;position:relative;transition:transform .3s var(--ease),border-color .3s;}
+.plan-card:hover{transform:translateY(-4px);}
+.plan-card--pop{border-color:#FF6B00;background:linear-gradient(180deg,#1f1408,#141414);box-shadow:0 24px 60px -20px rgba(255,107,0,0.4);}
+.plan-badge{position:absolute;top:-12px;left:24px;background:#FF6B00;color:#0D0D0D;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:5px 12px;border-radius:999px;}
+.plan-name{font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:24px;color:#F8F8F8;}
+.plan-tag{font-size:13px;color:#9A9A9A;margin-top:5px;}
+.plan-price{font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:36px;color:#F8F8F8;letter-spacing:-0.02em;margin-top:18px;}
+.plan-price span{font-family:'Inter',sans-serif;font-weight:400;font-size:13px;color:#9A9A9A;}
+.plan-list{list-style:none;margin-top:20px;display:flex;flex-direction:column;gap:9px;}
+.plan-list li{display:flex;align-items:flex-start;gap:9px;font-size:13.5px;color:#C7C7C7;line-height:1.5;}
+.plan-list li svg{flex-shrink:0;margin-top:3px;}
+
+/* ── Testimonials ── */
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+.testi-card{border-radius:20px;padding:30px;}
+.testi-quote{font-family:'Space Grotesk',sans-serif;font-size:50px;line-height:.55;font-weight:800;color:#FF6B00;}
+.testi-body{font-size:15px;line-height:1.7;margin-top:16px;}
+.testi-author{display:flex;align-items:center;gap:12px;margin-top:22px;}
+.testi-av{width:40px;height:40px;border-radius:50%;background:#242424;color:#FF6B00;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center;}
+.testi-name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14px;}
+.testi-role{font-size:12px;color:#9A9A9A;margin-top:2px;}
+
+/* ── CTA band ── */
+.cta-band{background:#F4F4F2;padding:96px 40px;text-align:center;}
+.cta-band h2{font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:clamp(34px,5vw,62px);color:#0D0D0D;letter-spacing:-0.03em;line-height:1.05;}
+.cta-band p{font-size:17px;color:#5A5A5A;margin-top:16px;max-width:500px;margin-left:auto;margin-right:auto;line-height:1.65;}
+.cta-band .actions{display:flex;gap:12px;justify-content:center;margin-top:34px;flex-wrap:wrap;}
+
+/* ── Footer ── */
+.footer{background:#0D0D0D;border-top:1px solid rgba(255,255,255,0.06);padding:56px 40px 28px;}
+.footer__grid{max-width:var(--container);margin:0 auto;display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px;}
+.footer__brand p{font-size:14px;color:#9A9A9A;margin-top:14px;max-width:270px;line-height:1.6;}
+.footer__col h4{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#FF6B00;margin-bottom:14px;}
+.footer__col a{display:block;font-size:14px;color:#C7C7C7;text-decoration:none;margin-bottom:8px;transition:color .15s;}
+.footer__col a:hover{color:#F8F8F8;}
+.footer__wm{font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:clamp(44px,10vw,150px);letter-spacing:-0.04em;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,0.1);text-align:center;margin-top:56px;line-height:1;max-width:var(--container);margin-left:auto;margin-right:auto;}
+.footer__bottom{max-width:var(--container);margin:18px auto 0;display:flex;justify-content:space-between;border-top:1px solid rgba(255,255,255,0.06);padding-top:18px;font-size:12px;color:#6B6B6B;}
+
+/* ── Plan FAB ── */
+.plan-fab{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:70;display:inline-flex;align-items:center;gap:10px;font-family:'Inter',sans-serif;font-weight:600;font-size:14px;background:#FF6B00;color:#0D0D0D;border:0;border-radius:999px;padding:13px 22px;cursor:pointer;white-space:nowrap;box-shadow:inset 0 1px 0 rgba(255,255,255,0.18),0 10px 28px -6px rgba(255,107,0,0.55);animation:pulse 2.6s ease-in-out infinite;transition:transform .2s,box-shadow .2s;}
+.plan-fab:hover{animation:none;transform:translateX(-50%) translateY(-4px) scale(1.03);box-shadow:inset 0 1px 0 rgba(255,255,255,0.22),0 16px 40px -6px rgba(255,107,0,0.7);}
+.fab-badge{background:rgba(13,13,13,0.2);color:#0D0D0D;font-size:10px;font-weight:700;padding:3px 8px;border-radius:999px;}
+/* ── WhatsApp FAB ── */
+.wa-fab{position:fixed;bottom:24px;right:24px;z-index:70;width:56px;height:56px;border-radius:50%;background:#25D366;border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 28px -6px rgba(37,211,102,0.6);transition:transform .2s var(--ease),box-shadow .2s;}
+.wa-fab:hover{transform:translateY(-4px) scale(1.08);box-shadow:0 14px 36px -6px rgba(37,211,102,0.75);}
+.wa-fab svg{width:28px;height:28px;fill:#fff;}
+
+/* ── Modals ── */
+.overlay{position:fixed;inset:0;background:rgba(6,6,6,0.72);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);z-index:200;display:flex;align-items:center;justify-content:center;padding:24px;animation:fadeIn .25s var(--ease);}
+.modal{background:rgba(18,18,18,0.97);border:1px solid rgba(255,255,255,0.1);border-radius:28px;width:100%;max-width:520px;padding:38px;animation:fadeUp .35s var(--ease);}
+.modal--wide{max-width:980px;display:grid;grid-template-rows:auto auto 1fr auto;max-height:88vh;overflow:hidden;padding:0;}
+.modal__close{width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,0.1);background:transparent;color:#F8F8F8;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s;font-size:16px;}
+.modal__close:hover{background:rgba(255,255,255,0.06);}
+.modal input{background:#0D0D0D;border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:13px 15px;color:#F8F8F8;font-family:'Inter',sans-serif;font-size:15px;outline:none;width:100%;transition:border-color .2s;}
+.modal input:focus{border-color:#FF6B00;}
+/* plan builder */
+.pb-scroll{overflow-y:auto;padding:18px 30px 22px;}
+.pb-scroll::-webkit-scrollbar{width:6px;}
+.pb-scroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:3px;}
+.pb-tabs{display:flex;gap:8px;padding:18px 30px 0;}
+.pb-tab{font-family:'Inter',sans-serif;font-size:13px;font-weight:600;padding:8px 14px;border-radius:999px;border:1px solid rgba(255,255,255,0.1);background:transparent;color:#C7C7C7;cursor:pointer;transition:all .2s;}
+.pb-tab.active{background:rgba(255,107,0,0.12);border-color:#FF6B00;color:#FF6B00;}
+.pb-pill{font-family:'Inter',sans-serif;font-size:13px;font-weight:500;padding:9px 13px;border-radius:11px;border:1px solid rgba(255,255,255,0.1);background:#1A1A1A;color:#C7C7C7;cursor:pointer;transition:all .2s var(--ease);}
+.pb-pill:hover{border-color:rgba(255,255,255,0.3);}
+.pb-pill.active{background:rgba(255,107,0,0.14);border-color:#FF6B00;color:#FF6B00;}
+.pb-footer{padding:16px 30px;border-top:1px solid rgba(255,255,255,0.08);display:flex;justify-content:space-between;align-items:center;gap:16px;background:rgba(13,13,13,0.5);}
+
+/* ── Page sections ── */
+.page-hero{padding:130px 40px 72px;background:#0D0D0D;border-bottom:1px solid rgba(255,255,255,0.06);}
+.page-hero .inner{max-width:var(--container);margin:0 auto;}
+.page-h{font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:clamp(40px,5.5vw,72px);letter-spacing:-0.03em;line-height:1.02;color:#F8F8F8;}
+.page-h span{color:#FF6B00;}
+.page-sub{font-size:18px;line-height:1.65;color:#C7C7C7;max-width:580px;margin-top:18px;}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="nav__inner">
+    <div class="nav__logo" id="logo-link">
+      <img src="./assets/logo-mark.png" alt="Agência Criativa"/>
+      <span class="nav__logo-text">Agência<span> Criativa</span></span>
+    </div>
+    <div class="nav__links">
+      <button class="nav__link" data-route="o-que-fazemos">O que fazemos</button>
+      <button class="nav__link" data-route="servicos">Serviços</button>
+      <button class="nav__link" data-route="vision">VISION</button>
+      <button class="nav__link" data-route="planos">Planos</button>
+      <button class="nav__link" data-route="quem-somos">Quem Somos</button>
+      <button class="nav__link" data-route="contato">Contato</button>
+      <button class="nav__cta" id="nav-cta">Falar com especialista →</button>
+    </div>
+  </div>
+</nav>
+
+<div id="root"></div>
+
+<!-- PLAN FAB -->
+<button class="plan-fab" id="plan-fab">
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+  Monte seu plano
+  <span class="fab-badge">NOVO</span>
+</button>
+
+<!-- WHATSAPP FAB -->
+<a class="wa-fab" href="https://wa.me/5516997505979?text=Olá!%20Vim%20pelo%20site%20da%20Agência%20Criativa%20e%20gostaria%20de%20saber%20mais." target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+</a>
+
+<script>
+/* ══════════════════════════════════
+   SUPABASE — Captação de leads
+   Substitua as chaves abaixo após criar o projeto em supabase.com
+══════════════════════════════════ */
+const SUPABASE_URL  = 'https://hkonusubkufvpriatemh.supabase.co';
+const SUPABASE_ANON = 'sb_publishable__xlh8-nPYLnJ9-D8ivxt_g_h3Wb3A8h';
+let _sb = null;
+function getSB(){
+  if(!_sb && window.supabase && !SUPABASE_URL.includes('SEU_'))
+    _sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+  return _sb;
+}
+
+async function saveLead(data){
+  const sb = getSB();
+  if(!sb) return; // sem Supabase configurado, silencia
+  try {
+    const { error } = await sb.from('leads').insert([{
+      nome:     data.nome     || null,
+      whatsapp: data.whatsapp || null,
+      site:     data.site     || null,
+      segmento: data.segmento || null,
+      mensagem: data.mensagem || null,
+      origem:   data.origem   || 'site',
+      url:      window.location.href,
+    }]);
+    if(error) console.warn('Supabase lead error:', error.message);
+    else {
+      // dispara evento Meta Pixel se configurado
+      if(window.fbq) fbq('track','Lead',{content_name: data.origem});
+    }
+  } catch(e){ console.warn('Supabase offline:', e.message); }
+}
+
+/* ── Config ── */
+const WA_NUM = '5516997505979';
+const WA_URL = (msg='Olá! Vim pelo site da Agência Criativa e gostaria de saber mais.') =>
+  `https://wa.me/${WA_NUM}?text=${encodeURIComponent(msg)}`;
+
+/* ── Formulário — modal de contato ── */
+window.submitContactModal = async function(btn){
+  const modal = btn.closest('.modal');
+  const inputs = modal.querySelectorAll('input');
+  const [nome, whatsapp, site] = [...inputs].map(i=>i.value.trim());
+  if(!nome || !whatsapp){ inputs[!nome?0:1].focus(); return; }
+  btn.disabled = true; btn.textContent = 'Enviando…';
+  await saveLead({ nome, whatsapp, site, origem:'modal-diagnostico' });
+  // redireciona para WhatsApp com dados pré-preenchidos
+  const msg = `Olá! Sou ${nome}, vim pelo site da Agência Criativa e quero um diagnóstico gratuito. Meu site/Instagram: ${site||'—'}`;
+  window.open(WA_URL(msg), '_blank');
+  document.getElementById('cm')?.remove();
+};
+
+/* ── Formulário — página contato ── */
+window.submitContatoPage = async function(btn){
+  const form = btn.closest('div');
+  const inputs = form.querySelectorAll('input');
+  const textarea = form.querySelector('textarea');
+  const [nome, whatsapp, site, segmento] = [...inputs].map(i=>i.value.trim());
+  const mensagem = textarea?.value?.trim();
+  if(!nome || !whatsapp){ inputs[!nome?0:1].focus(); return; }
+  btn.disabled = true; btn.textContent = 'Enviando…';
+  await saveLead({ nome, whatsapp, site, segmento, mensagem, origem:'pagina-contato' });
+  const msg = `Olá! Sou ${nome}${segmento?' ('+segmento+')':''}. Vim pelo site. ${mensagem||'Gostaria de saber mais.'}`;
+  window.open(WA_URL(msg), '_blank');
+  btn.textContent = 'Mensagem enviada! ✓';
+  btn.style.background = '#00E676';
+};
+
+/* ── Router ── */
+let route = 'home';
+
+function setRoute(r){
+  route = r;
+  render();
+  window.scrollTo({top:0,behavior:'smooth'});
+  updateNav();
+  raf(observe);
+}
+
+function updateNav(){
+  document.querySelectorAll('.nav__link').forEach(l=>{
+    l.classList.toggle('active', l.dataset.route === route);
+  });
+}
+
+/* ── Scroll nav + tema da logo ── */
+const navEl = document.getElementById('nav');
+const navLogoImg = document.querySelector('.nav__logo img');
+const navLogoText = document.querySelector('.nav__logo-text');
+
+function applyNavTheme(){
+  const dark = navEl.classList.contains('scrolled') || navEl.classList.contains('dark-hero');
+  /* PNG tem fundo branco: multiply remove bg branco no fundo claro;
+     invert(1)+screen remove bg preto-invertido no fundo escuro — só o símbolo fica */
+  if(dark){
+    navLogoImg.style.filter       = 'invert(1)';
+    navLogoImg.style.mixBlendMode = 'screen';
+  } else {
+    navLogoImg.style.filter       = 'none';
+    navLogoImg.style.mixBlendMode = 'multiply';
+  }
+  navLogoText.style.color = dark ? '#F8F8F8' : '#0D0D0D';
+}
+
+window.addEventListener('scroll',()=>{
+  navEl.classList.toggle('scrolled', window.scrollY > 60);
+  applyNavTheme();
+},{passive:true});
+
+/* ── Nav clicks ── */
+document.querySelector('.nav__inner').addEventListener('click',e=>{
+  const btn = e.target.closest('[data-route]');
+  if(btn) setRoute(btn.dataset.route);
+});
+document.getElementById('logo-link').addEventListener('click',()=>setRoute('home'));
+document.getElementById('nav-cta').addEventListener('click',openContact);
+
+/* ── Reveal observer ── */
+const io = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('shown');io.unobserve(e.target);}});
+},{threshold:0.1});
+function observe(){document.querySelectorAll('.reveal,.reveal-l,.reveal-r,.reveal-scale').forEach(el=>io.observe(el));}
+function raf(fn){requestAnimationFrame(()=>requestAnimationFrame(fn));}
+
+/* ── SVG icons ── */
+const ICONS = {
+  monitor:`<rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>`,
+  zap:`<path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/>`,
+  trend:`<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>`,
+  cam:`<path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/>`,
+  check:`<polyline points="20 6 9 17 4 12"/>`,
+  settings:`<path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>`,
+  barchart:`<line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>`,
+  photo:`<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>`,
+  rocket:`<path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m3.29 15 1.42 1.42"/><path d="M10.34 12.66a5.5 5.5 0 0 0 7.81-7.81L10.34 12.66z"/><path d="M14.7 4.7a5.5 5.5 0 0 1 4.6 4.6"/>`,
+  mail:`<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>`,
+  globe:`<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>`,
+  pin:`<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>`,
+  target:`<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>`,
+  bot:`<rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" y1="16" x2="8" y2="16"/><line x1="16" y1="16" x2="16" y2="16"/>`,
+  message:`<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>`,
+  refresh:`<polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.5"/>`,
+  pie:`<path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/>`,
+  wrench:`<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>`,
+};
+function icon(k,s=22){return`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">${ICONS[k]||ICONS.zap}</svg>`;}
+function chk(s=15){return`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="#00E676" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">${ICONS.check}</svg>`;}
+function icSvg(path,s=24,stroke='currentColor'){return`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="${stroke}" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">${path}</svg>`;}
+
+/* ══════════════════════════════════
+   HOME
+══════════════════════════════════ */
+function renderHome(){return`
+<!-- HERO -->
+<section class="hero">
+  <div class="hero__left">
+    <div class="hero__inner">
+      <p class="kicker load-0">São Carlos · SP · Brasil</p>
+      <h1 class="hero__h1 load-1">Transformamos<br/>presença digital<br/>em <span>crescimento real.</span></h1>
+      <p class="hero__lead load-2">Não vendemos sites. Não vendemos posts. Construímos estruturas completas — presença, conversão e automação — que transformam atenção em vendas.</p>
+      <div class="hero__actions load-3">
+        <button class="btn btn-primary" id="hero-cta">Quero meu diagnóstico →</button>
+        <button class="btn btn-dark" onclick="setRoute('servicos')">Ver serviços</button>
+      </div>
+      <div class="hero__stats load-4">
+        <div><div class="stat__n">+312%</div><div class="stat__l">média de leads em 90 dias</div></div>
+        <div><div class="stat__n">48h</div><div class="stat__l">protótipo antes da venda</div></div>
+        <div><div class="stat__n">100%</div><div class="stat__l">foco em resultado</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="hero__right">
+    <div class="hero__wm">
+      <img src="./assets/logo-mark.png" alt="" aria-hidden="true" class="load-img"/>
+    </div>
+  </div>
+</section>
+
+<!-- SERVIÇOS -->
+<section style="padding:0;background:#0D0D0D;">
+  <div style="max-width:var(--container);margin:0 auto;padding:72px 40px 36px;">
+    <p class="kicker reveal">O que fazemos</p>
+    <div class="section-line load-line" style="width:0;"></div>
+    <h2 class="sec-h reveal" style="color:#F8F8F8;max-width:680px;margin-top:4px;">Quatro pilares.<br/>Um sistema que <span style="color:#FF6B00;">fatura</span>.</h2>
+  </div>
+  <div class="svc-grid reveal">
+    ${[
+      ['monitor','Desenvolvimento','Sites de alta conversão','Landing pages, institucionais e sistemas pensados para gerar contato e fechar venda — não só "ficar bonitos".'],
+      ['zap','VISION','Automação & CRM','Não entregamos ferramentas. Construímos sistemas que aceleram vendas, economizam tempo e aumentam faturamento.'],
+      ['trend','Marketing','Posicionamento estratégico','Branding, copy de alta conversão e presença real no Google e Instagram. Não é "fazer post". É vender.'],
+      ['cam','Produção','Conteúdo visual','Fotografia comercial via MAGONFOTOGRAFIA, campanhas e material institucional com olhar criativo.'],
+    ].map(([ic,tag,h,p],i)=>`
+    <div class="svc-card d${i+1}">
+      <div class="svc-icon">${icon(ic)}</div>
+      <div class="svc-tag">${tag}</div>
+      <div class="svc-h">${h}</div>
+      <p class="svc-p">${p}</p>
+    </div>`).join('')}
+  </div>
+</section>
+
+<!-- STATS BAND -->
+<div class="stats-band reveal">
+  <div class="stats-band__inner">
+    ${[['+ 312%','média de leads em 90 dias'],['48h','protótipo entregue antes da venda'],['77%','economia vs. contratar separado'],['100%','foco em resultado']].map(([n,l])=>`
+    <div><div class="stats-n">${n}</div><div class="stats-l">${l}</div></div>`).join('')}
+  </div>
+</div>
+
+<!-- SESSÃO 3: RESULTADOS — só texto, sem foto -->
+<section class="sec-full" style="background:#0D0D0D;border-top:1px solid rgba(255,255,255,0.06);">
+  <div class="inner">
+    <div class="reveal">
+      <p class="kicker">Resultados que entregamos</p>
+      <div class="section-line" style="width:60px;margin-top:12px;"></div>
+      <h2 class="sec-h" style="color:#F8F8F8;margin-top:4px;">Mais visibilidade.<br/>Mais clientes.<br/>Mais <span style="color:#FF6B00;">autoridade.<br/>Mais faturamento.</span></h2>
+      <p style="font-size:17px;line-height:1.65;color:#C7C7C7;margin-top:16px;max-width:640px;">Mais do que serviços, entregamos crescimento real, estratégico e mensurável para empresas que querem dominar seu mercado.</p>
+    </div>
+    <ul class="check-list reveal" style="margin-top:36px;">
+      ${['Presença constante e estratégica nas redes sociais','Alcance orgânico e pago com foco em performance','Posicionamento real no Google e buscas locais','Autoridade de marca e percepção premium','Identidade visual profissional e consistente','Geração de leads qualificados','Funis de conversão estruturados','Atendimento humanizado e estratégico','Automação de processos comerciais','Retenção e recorrência de clientes','Crescimento previsível e escalável','Relatórios e inteligência para tomada de decisão'].map(t=>`
+      <li class="d1"><div class="ci"><div class="cd"></div></div>${t}</li>`).join('')}
+    </ul>
+    <div class="reveal" style="margin-top:40px;">
+      <button class="btn btn-primary" id="results-cta">Quero esses resultados →</button>
+    </div>
+  </div>
+</section>
+
+<!-- SESSÃO 4: VISION — seção unificada, watermark de fundo -->
+<section class="vision-sec" id="vision">
+  <div class="vision-sec__bg"><div class="vision-sec__bg-text">VISION</div></div>
+  <div class="vision-sec__glow"></div>
+  <div class="vision-sec__inner">
+    <div class="reveal" style="text-align:center;">
+      <p class="kicker kicker-v" style="letter-spacing:.28em;">V I S I O N</p>
+      <div class="section-line-v" style="width:60px;margin:14px auto 0;"></div>
+      <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:clamp(36px,5vw,62px);color:#fff;letter-spacing:-0.02em;line-height:1.05;margin-top:16px;">
+        Tecnologia invisível.<br/><span style="color:#9B6BFF;">Resultado real.</span>
+      </h2>
+      <p style="font-size:17px;line-height:1.7;color:#c8bce6;margin-top:18px;max-width:660px;margin-left:auto;margin-right:auto;">
+        Criamos ecossistemas completos de aquisição, gestão e conversão de clientes. Não entregamos ferramentas — construímos sistemas que aceleram vendas, economizam tempo e aumentam faturamento.
+      </p>
+    </div>
+    <ul style="list-style:none;margin-top:36px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px;" class="reveal">
+      ${['CRM e gestão de leads personalizados','Automação comercial e operacional','Funis de vendas completos','Captação e nutrição de leads','Atendimento automatizado e humanizado','Sistemas de agendamento e pós-venda','Dashboards e inteligência comercial','Estruturas digitais escaláveis'].map(t=>`
+      <li style="display:flex;align-items:flex-start;gap:12px;font-size:15px;color:#c8bce6;line-height:1.55;">
+        <div class="ci" style="background:rgba(155,107,255,0.15);flex-shrink:0;margin-top:2px;"><div class="cd" style="background:#9B6BFF;"></div></div>${t}
+      </li>`).join('')}
+    </ul>
+    <div class="vision-chips reveal" style="margin-top:40px;">
+      ${['Automação comercial','CRM personalizado','WhatsApp ativo','Pipeline real'].map(t=>`
+      <div class="vision-chip"><span>${t}</span></div>`).join('')}
+    </div>
+    <div class="reveal" style="text-align:center;margin-top:40px;">
+      <button class="btn btn-vision" onclick="setRoute('vision')">Conhecer o VISION →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ECONOMIA / SAVINGS split -->
+<section class="split">
+  <div class="split__text reveal-l" style="background:#F4F4F2;">
+    <p class="kicker kicker-dk">Economia real</p>
+    <div class="section-line" style="width:60px;margin-top:12px;"></div>
+    <h2 class="split__h" style="color:#0D0D0D;margin-top:4px;">Economize até<br/><span style="color:#FF6B00;">77%</span> com<br/>um plano completo.</h2>
+    <p style="font-size:15px;line-height:1.65;color:#4A4A4A;margin-top:16px;">Contratando separado vs. solução integrada da Agência Criativa.</p>
+    <div style="margin-top:26px;display:flex;flex-direction:column;gap:9px;">
+      ${[['Social Media Freelancer','R$ 1.200/mês'],['Fotógrafo Profissional','R$ 2.400/mês'],['Site + Manutenção','R$ 3.800/mês'],['Gestor de Tráfego','R$ 800/mês'],['Videomaker','R$ 600/mês']].map(([k,v])=>`
+      <div style="display:flex;justify-content:space-between;border-bottom:1px solid rgba(0,0,0,0.08);padding-bottom:8px;font-size:14px;color:#4A4A4A;">
+        <span>${k}</span><span style="color:#9A9A9A;">${v}</span>
+      </div>`).join('')}
+      <div style="display:flex;justify-content:space-between;font-size:14px;margin-top:4px;font-weight:600;color:#0D0D0D;">
+        <span>Total separado</span>
+        <span style="font-family:'Space Grotesk',sans-serif;font-size:18px;">R$ 9.300/mês</span>
+      </div>
+      <div style="background:#FF6B00;border-radius:14px;padding:16px 18px;display:flex;justify-content:space-between;align-items:center;margin-top:8px;">
+        <div>
+          <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(0,0,0,0.55);">Com Agência Criativa</div>
+          <div style="font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:22px;color:#0D0D0D;margin-top:2px;">A partir de R$ 2.097/mês</div>
+        </div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:26px;color:#0D0D0D;">−77%</div>
+      </div>
+    </div>
+  </div>
+  <div class="split__img reveal-scale" style="background:#0D0D0D;display:flex;align-items:center;justify-content:center;">
+    <div style="text-align:center;padding:48px;">
+      <div style="font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:clamp(80px,13vw,190px);color:#FF6B00;letter-spacing:-0.04em;line-height:1;">77%</div>
+      <div style="font-size:14px;color:#9A9A9A;margin-top:10px;letter-spacing:.07em;text-transform:uppercase;">de economia</div>
+    </div>
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(255,107,0,0.07),transparent 70%);pointer-events:none;"></div>
+  </div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section class="sec-full" style="background:#F4F4F2;">
+  <div class="inner">
+    <div class="reveal" style="margin-bottom:40px;">
+      <p class="kicker kicker-dk">Depoimentos</p>
+      <div class="section-line" style="width:60px;margin-top:12px;"></div>
+      <h2 class="sec-h" style="color:#0D0D0D;margin-top:4px;">O que nossos<br/>clientes dizem.</h2>
+    </div>
+    <div class="testi-grid">
+      ${[
+        ['MC','Maria Costa','Proprietária — Restaurante Sabor da Terra','Desde que começamos com a VISION, nossas reservas aumentaram 180%. As fotos ficaram incríveis e o Instagram finalmente começou a trazer clientes.','#fff','rgba(0,0,0,0.07)','#2A2A2A'],
+        ['RS','Roberto Silva','Diretor — Clínica Estética Bella Vita','Finalmente uma agência que entende de tecnologia E marketing. A automação de WhatsApp economiza 10 horas por semana da minha equipe.','#fff','rgba(0,0,0,0.07)','#2A2A2A'],
+        ['PA','Paulo Andrade','Gerente — Revenda Premium Motors','As fotos automotivas são de outro nível. Nossos anúncios convertem 3x mais e conseguimos vender carros mais rápido. Parceria indispensável.','#fff','rgba(0,0,0,0.07)','#2A2A2A'],
+      ].map(([av,n,r,q,bg,bo,tc],i)=>`
+      <div class="testi-card reveal d${i+1}" style="background:${bg};border:1px solid ${bo};">
+        <div class="testi-quote">"</div>
+        <p class="testi-body" style="color:${tc};">${q}</p>
+        <div class="testi-author">
+          <div class="testi-av">${av}</div>
+          <div>
+            <div class="testi-name" style="color:${tc==='#2A2A2A'?'#0D0D0D':'#F8F8F8'};">${n}</div>
+            <div class="testi-role">${r}</div>
+          </div>
+        </div>
+      </div>`).join('')}
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<div class="cta-band reveal">
+  <div class="section-line" style="width:60px;margin:0 auto 20px;"></div>
+  <h2>Pronto para transformar<br/>seu negócio?</h2>
+  <p>Agende uma consultoria gratuita de 30 minutos e descubra como aumentar suas vendas com presença digital estratégica.</p>
+  <div class="actions">
+    <button class="btn btn-primary" id="cta-final">Agendar consultoria gratuita →</button>
+    <button class="btn btn-dark" onclick="setRoute('planos')">Ver planos</button>
+  </div>
+</div>
+
+${renderFooter()}
+`;}
+
+/* ══════════════════════════════════
+   SERVIÇOS PAGE
+══════════════════════════════════ */
+function renderServicos(){return`
+<section class="page-hero">
+  <div class="inner">
+    <p class="kicker load-0">O que fazemos</p>
+    <div style="width:0;height:2px;background:#FF6B00;margin:12px 0 20px;animation:lineW .8s var(--ease) .4s both;"></div>
+    <h1 class="page-h load-1">Nossos <span>serviços</span>.</h1>
+    <p class="page-sub load-2">Quatro pilares estratégicos que funcionam de forma integrada. Cada serviço foi desenhado para gerar resultado, não apenas presença.</p>
+  </div>
+</section>
+
+${[
+  {tag:'Desenvolvimento',h:'Sites de alta conversão',p:'Não construímos sites para impressionar julgadores de design. Construímos sistemas digitais que captam atenção e a convertem em contato, consulta ou venda. Cada elemento tem função.',items:['Landing pages focadas em conversão','Sites institucionais com copy estratégico','E-commerces integrados a sistemas de gestão','Portfólios e sites para profissionais liberais','Integrações com CRM, WhatsApp e automações'],bg:'#0D0D0D',tc:'#F8F8F8',pc:'#C7C7C7',lc:'dark'},
+  {tag:'VISION',h:'Automação, CRM & Sistemas de Crescimento',p:'Criamos ecossistemas completos de aquisição, gestão e conversão de clientes através da metodologia proprietária VISION. Mais do que automações isoladas, desenvolvemos estruturas inteligentes que aceleram vendas, economizam tempo e aumentam faturamento.',items:['CRM e gestão de leads personalizados','Automação comercial e operacional','Funis de vendas completos','Captação e nutrição de leads','Atendimento automatizado e humanizado','Sistemas de agendamento e pós-venda','Dashboards e inteligência comercial','Integrações entre marketing, vendas e operação','Estruturas digitais escaláveis'],bg:'#F4F4F2',tc:'#0D0D0D',pc:'#4A4A4A',lc:'light'},
+  {tag:'Marketing',h:'Posicionamento Estratégico & Crescimento',p:'Marketing não significa apenas presença digital. Aplicamos a metodologia VISION para estruturar marcas, fortalecer autoridade e transformar atenção em vendas reais. Não fazemos apenas marketing — construímos posicionamento, percepção de valor e crescimento previsível.',items:['Branding estratégico e identidade visual','Copywriting de alta conversão','Presença forte no Google e redes sociais','Estruturação de funis comerciais','Estratégia de aquisição e retenção','Autoridade digital e posicionamento competitivo','Campanhas orientadas por performance'],bg:'#0D0D0D',tc:'#F8F8F8',pc:'#C7C7C7',lc:'dark'},
+  {tag:'Produção',h:'Conteúdo Visual Estratégico',p:'Nosso olhar criativo transforma negócios em marcas memoráveis através de produção visual estratégica e orientada para conversão. Cada imagem, vídeo ou campanha é criada para fortalecer autoridade, gerar percepção premium e impulsionar vendas.',items:['Fotografia comercial e institucional','Fotografia de produtos','Produção para redes sociais','Reels, vídeos curtos e campanhas','Conteúdo para anúncios pagos','Cobertura visual corporativa','Materiais promocionais e institucionais','Direção criativa para presença digital'],bg:'#F4F4F2',tc:'#0D0D0D',pc:'#4A4A4A',lc:'light'},
+].map(({tag,h,p,items,bg,tc,pc,lc},i)=>`
+<section style="padding:72px 40px;background:${bg};border-top:1px solid ${bg==='#0D0D0D'?'rgba(255,255,255,0.06)':'rgba(0,0,0,0.06)'};">
+  <div style="max-width:var(--container);margin:0 auto;display:grid;grid-template-columns:1fr 1.4fr;gap:64px;align-items:center;">
+    <div class="reveal-l">
+      <p class="kicker">${tag}</p>
+      <div class="section-line" style="width:60px;margin-top:10px;"></div>
+      <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:clamp(30px,3.5vw,46px);color:${tc};letter-spacing:-0.02em;line-height:1.05;margin-top:4px;">${h}</h2>
+      <p style="font-size:16px;line-height:1.7;color:${pc};margin-top:16px;">${p}</p>
+    </div>
+    <ul class="reveal-r" style="list-style:none;display:flex;flex-direction:column;gap:12px;">
+      ${items.map(it=>`
+      <li style="display:flex;align-items:flex-start;gap:14px;padding:16px 20px;border-radius:14px;background:${bg==='#0D0D0D'?'rgba(255,255,255,0.04)':'rgba(0,0,0,0.04)'};border:1px solid ${bg==='#0D0D0D'?'rgba(255,255,255,0.07)':'rgba(0,0,0,0.07)'};">
+        <div class="ci"><div class="cd"></div></div>
+        <span style="font-size:15px;color:${pc};line-height:1.5;">${it}</span>
+      </li>`).join('')}
+    </ul>
+  </div>
+</section>`).join('')}
+
+<div class="cta-band reveal">
+  <div class="section-line" style="width:60px;margin:0 auto 20px;"></div>
+  <h2>Vamos construir juntos?</h2>
+  <p>Entre em contato e descubra qual serviço faz sentido para o seu negócio agora.</p>
+  <div class="actions">
+    <button class="btn btn-primary" id="servicos-cta">Falar com especialista →</button>
+    <button class="btn btn-dark" onclick="setRoute('planos')">Ver planos e preços</button>
+  </div>
+</div>
+${renderFooter()}
+`;}
+
+/* ══════════════════════════════════
+   PLANOS PAGE
+══════════════════════════════════ */
+function renderPlanos(){return`
+<section class="page-hero">
+  <div class="inner">
+    <p class="kicker load-0">Investimento</p>
+    <div style="width:0;height:2px;background:#FF6B00;margin:12px 0 20px;animation:lineW .8s var(--ease) .4s both;"></div>
+    <h1 class="page-h load-1">Escolha seu <span>plano</span>.</h1>
+    <p class="page-sub load-2">Pacotes completos com tudo incluído. Sem surpresas, sem cobranças escondidas.</p>
+  </div>
+</section>
+
+<section class="sec-full" style="background:#0D0D0D;">
+  <div class="inner">
+    <div class="plans-grid">
+      ${[
+        {name:'Presença',tag:'Para empresas que querem começar a aparecer',price:'R$ 1.047',pop:false,features:['2 Redes Sociais (Instagram + Facebook)','8 Posts/mês com criativos profissionais','1 Sessão de fotos/mês (15 fotos tratadas)','Otimização Google Meu Negócio','Respostas a comentários e mensagens','Relatório mensal de métricas']},
+        {name:'Crescimento',tag:'Para empresas que querem se destacar',price:'R$ 2.097',pop:true,features:['TUDO do Plano Presença +','3 Redes Sociais gerenciadas','16 Posts/mês (4 por semana)','2 Sessões de fotos/mês (30 fotos)','4 Vídeos curtos/mês','Site profissional incluso','1 Campanha Meta Ads gerenciada','Estratégia personalizada mensal']},
+        {name:'Autoridade',tag:'Para empresas que querem dominar',price:'R$ 3.847',pop:false,features:['TUDO do Plano Crescimento +','Todas as redes sociais relevantes','24 Posts/mês (conteúdo diário)','3 Sessões de fotos/mês (50 fotos)','8 Vídeos/mês profissionais','Meta Ads + Google Ads completo','Landing pages específicas','Consultoria estratégica mensal','Cobertura de 1 evento/mês']},
+      ].map(({name,tag,price,pop,features},i)=>`
+      <div class="plan-card ${pop?'plan-card--pop':''} reveal d${i+1}">
+        ${pop?'<div class="plan-badge">Mais popular</div>':''}
+        <div class="plan-name">${name}</div>
+        <div class="plan-tag">${tag}</div>
+        <div class="plan-price" ${pop?'style="color:#FF6B00;"':''}>${price}<span>/mês</span></div>
+        <ul class="plan-list">
+          ${features.map(f=>`<li>${chk()}${f}</li>`).join('')}
+        </ul>
+        <button class="btn ${pop?'btn-primary':'btn-secondary'}" style="width:100%;justify-content:center;margin-top:22px;font-size:14px;" id="plan-cta-${i}">
+          ${pop?'Escolher este plano':'Falar com especialista'}
+        </button>
+      </div>`).join('')}
+    </div>
+
+    <!-- Serviços únicos -->
+    <div class="reveal" style="margin-top:72px;">
+      <p class="kicker">Serviços únicos</p>
+      <div class="section-line" style="width:60px;margin-top:10px;"></div>
+      <h2 class="sec-h" style="color:#F8F8F8;margin-top:4px;">Projetos de implementação.</h2>
+      <p style="font-size:16px;color:#9A9A9A;margin-top:12px;max-width:560px;">Investimento pontual para projetos específicos. Sem mensalidade.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:32px;">
+      ${[
+        ['Site Profissional','Completo, responsivo e otimizado para SEO.','Único'],
+        ['Landing Page','Foco total em uma conversão específica.','Único'],
+        ['Automação WhatsApp','Atendimento automático integrado ao CRM.','Único'],
+        ['Sistema Personalizado','Catálogo digital, gestão, painel interno.','Único'],
+        ['Identidade Visual','Logo, manual de marca e aplicações.','Único'],
+      ].map(([h,p,tag],i)=>`
+      <div class="reveal d${(i%4)+1}" style="background:#141414;border:1px solid rgba(255,255,255,0.07);border-radius:18px;padding:26px;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#FF6B00;background:rgba(255,107,0,0.1);padding:4px 10px;border-radius:999px;display:inline-block;">${tag}</div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;color:#F8F8F8;margin-top:14px;">${h}</div>
+        <p style="font-size:14px;color:#9A9A9A;margin-top:6px;line-height:1.55;">${p}</p>
+        <button class="btn btn-secondary" style="margin-top:20px;font-size:13px;padding:10px 18px;" id="unico-cta-${i}">Solicitar orçamento</button>
+      </div>`).join('')}
+    </div>
+    <p style="font-size:12px;color:#6B6B6B;margin-top:20px;">* Valores sob consulta para serviços únicos. Entre em contato para receber uma proposta personalizada.</p>
+  </div>
+</section>
+
+<div class="cta-band reveal">
+  <div class="section-line" style="width:60px;margin:0 auto 20px;"></div>
+  <h2>Não sabe qual plano escolher?</h2>
+  <p>Fale com Eduardo e descubra qual estrutura faz mais sentido para o momento da sua empresa.</p>
+  <div class="actions">
+    <button class="btn btn-primary" id="planos-cta">Falar com especialista →</button>
+    <button class="btn btn-dark" id="plan-builder-cta">Montar plano personalizado</button>
+  </div>
+</div>
+${renderFooter()}
+`;}
+
+/* ══════════════════════════════════
+   VISION PAGE
+══════════════════════════════════ */
+function renderVision(){return`
+<section style="position:relative;padding:130px 40px 80px;overflow:hidden;background:linear-gradient(160deg,#0A1628 0%,#150B38 55%,#1E0A2E 100%);min-height:70vh;display:flex;align-items:center;">
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 70% 25%,rgba(155,107,255,0.35),transparent 55%);pointer-events:none;"></div>
+  <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;overflow:hidden;pointer-events:none;">
+    <div style="font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:clamp(140px,24vw,360px);color:rgba(155,107,255,0.05);letter-spacing:-0.06em;line-height:1;user-select:none;">VISION</div>
+  </div>
+  <div style="max-width:1080px;margin:0 auto;text-align:center;position:relative;z-index:2;">
+    <div class="load-0" style="font-family:'Space Grotesk',sans-serif;font-weight:800;letter-spacing:.32em;color:#9B6BFF;font-size:13px;">V I S I O N</div>
+    <h1 class="load-1" style="font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:clamp(48px,7vw,88px);line-height:1.0;color:#fff;margin-top:20px;letter-spacing:-0.03em;">
+      Tecnologia invisível.<br/><span style="color:#9B6BFF;">Resultado real.</span>
+    </h1>
+    <p class="load-2" style="font-size:18px;line-height:1.7;color:#c8bce6;margin-top:22px;max-width:640px;margin-left:auto;margin-right:auto;">
+      O sistema de automação premium da Agência Criativa — estruturas completas que trabalham 24h enquanto você foca no que importa.
+    </p>
+    <div class="load-3" style="display:flex;gap:12px;justify-content:center;margin-top:34px;flex-wrap:wrap;">
+      <button class="btn btn-vision" id="vision-page-cta">Quero o VISION →</button>
+      <button class="btn btn-secondary" onclick="setRoute('contato')">Falar com especialista</button>
+    </div>
+  </div>
+</section>
+
+<section style="padding:72px 40px;background:#0A1628;">
+  <div style="max-width:1080px;margin:0 auto;">
+    <div class="reveal">
+      <p class="kicker kicker-v">Como funciona</p>
+      <div class="section-line-v" style="width:60px;margin-top:10px;"></div>
+      <h2 class="sec-h" style="color:#fff;margin-top:4px;max-width:680px;">Automação que vende<br/>enquanto você dorme.</h2>
+    </div>
+    <div class="vision-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-top:36px;">
+      ${[
+        [ICONS.target,'Captação de leads','Formulários, chatbots e funis configurados para captar o cliente certo no momento certo.'],
+        [ICONS.bot,'Qualificação automática','IA classifica, pontua e prioriza cada lead antes de chegar na sua equipe.'],
+        [ICONS.message,'Comunicação ativa','WhatsApp, e-mail e notificações automatizadas — a mensagem certa, no canal certo.'],
+        [ICONS.refresh,'Follow-up inteligente','Nenhum lead esquecido. Sequências automáticas acompanham cada oportunidade.'],
+        [ICONS.pie,'Pipeline visível','Dashboard em tempo real: você sabe exatamente onde está cada negociação.'],
+        [ICONS.wrench,'Sob medida','Cada sistema VISION é construído e gerenciado exclusivamente para o seu negócio.'],
+      ].map(([ic,t,d],i)=>`
+      <div class="reveal d${(i%4)+1}" style="padding:22px;border-radius:18px;background:rgba(20,12,50,0.55);backdrop-filter:blur(12px);border:1px solid rgba(155,107,255,0.22);">
+        <div style="width:40px;height:40px;border-radius:10px;background:rgba(155,107,255,0.15);display:flex;align-items:center;justify-content:center;color:#9B6BFF;margin-bottom:14px;">${icSvg(ic,20,'#9B6BFF')}</div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px;color:#fff;margin-bottom:8px;">${t}</div>
+        <div style="font-size:13px;color:#9aa6c0;line-height:1.6;">${d}</div>
+      </div>`).join('')}
+    </div>
+  </div>
+</section>
+
+<section style="padding:72px 40px;background:linear-gradient(180deg,#0A1628,#08102a);">
+  <div style="max-width:860px;margin:0 auto;text-align:center;">
+    <div class="reveal">
+      <p class="kicker kicker-v">Stack tecnológico</p>
+      <div class="section-line-v" style="width:60px;margin:10px auto 0;"></div>
+      <h2 class="sec-h" style="color:#fff;margin-top:16px;">Ferramentas profissionais.<br/>Integração completa.</h2>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:36px;">
+        ${['n8n','Supabase','WhatsApp API','Llama 3.3','Groq','Meta Ads','Google Ads','Notion','Make','OpenAI'].map(t=>`
+        <span style="font-size:13px;font-weight:600;padding:9px 18px;border-radius:999px;border:1px solid rgba(155,107,255,0.28);color:#c8bce6;background:rgba(108,63,199,0.12);">${t}</span>`).join('')}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding:72px 40px;background:radial-gradient(ellipse at 50% 0%,rgba(108,63,199,0.22),transparent 60%),#0A1628;text-align:center;">
+  <div style="max-width:700px;margin:0 auto;" class="reveal">
+    <h2 class="sec-h" style="color:#fff;">Cada projeto é exclusivo.</h2>
+    <p style="font-size:17px;line-height:1.7;color:#c8bce6;margin-top:16px;">Não é um produto pronto. É uma estrutura construída para o seu negócio, gerenciada pela agência e evoluída continuamente.</p>
+    <div style="margin-top:34px;">
+      <button class="btn btn-vision" id="vision-page-cta2">Quero o VISION para minha empresa →</button>
+    </div>
+  </div>
+</section>
+${renderFooter()}
+`;}
+
+/* ══════════════════════════════════
+   QUEM SOMOS PAGE
+══════════════════════════════════ */
+function renderQuemSomos(){return`
+<section class="page-hero">
+  <div class="inner">
+    <p class="kicker load-0">Quem somos</p>
+    <div style="width:0;height:2px;background:#FF6B00;margin:12px 0 20px;animation:lineW .8s var(--ease) .4s both;"></div>
+    <h1 class="page-h load-1">A <span>pessoa</span><br/>por trás da tela.</h1>
+    <p class="page-sub load-2">Quando você fala com a Agência Criativa, fala diretamente com quem vai trabalhar no seu projeto.</p>
+  </div>
+</section>
+
+<section style="padding:72px 40px;background:#0D0D0D;">
+  <div style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:0.8fr 1.2fr;gap:72px;align-items:center;">
+    <div class="reveal-l">
+      <div style="aspect-ratio:4/5;border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,0.08);">
+        <img src="./assets/eduardo-portrait.jpg" alt="Eduardo" style="width:100%;height:100%;object-fit:cover;filter:contrast(1.05);"/>
+      </div>
+    </div>
+    <div class="reveal-r">
+      <p class="kicker">Por trás das câmeras</p>
+      <div class="section-line" style="width:60px;margin-top:10px;"></div>
+      <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:clamp(34px,4.5vw,54px);color:#F8F8F8;letter-spacing:-0.02em;line-height:1.05;margin-top:4px;">
+        Eduardo.<br/><span style="color:#FF6B00;">Criativo</span> por dentro,<br/>estrategista por fora.
+      </h2>
+      <p style="font-size:17px;line-height:1.7;color:#C7C7C7;margin-top:22px;">À frente da Agência Criativa está Eduardo — fotógrafo comercial, diretor de arte e estrategista digital. Um olhar treinado para capturar o que importa, agora aplicado a marcas, sites e sistemas que precisam parar o cliente certo na hora certa.</p>
+      <p style="font-size:17px;line-height:1.7;color:#C7C7C7;margin-top:14px;">Com experiência em fotografia comercial pela MAGONFOTOGRAFIA, Eduardo traz um olhar criativo e estratégico único para cada cliente da agência.</p>
+      <div style="margin-top:32px;display:flex;gap:12px;flex-wrap:wrap;">
+        <button class="btn btn-primary" id="quem-cta">Agendar reunião →</button>
+        <button class="btn btn-secondary" onclick="setRoute('contato')">Entrar em contato</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec-full" style="background:#F4F4F2;border-top:1px solid rgba(0,0,0,0.06);">
+  <div class="inner">
+    <div class="reveal" style="margin-bottom:40px;">
+      <p class="kicker kicker-dk">Nossa filosofia</p>
+      <div class="section-line" style="width:60px;margin-top:10px;"></div>
+      <h2 class="sec-h" style="color:#0D0D0D;margin-top:4px;">Como pensamos.</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;">
+      ${[
+        ['Diagnóstico antes da proposta','Chegamos com o problema identificado — não com um portfólio para vender.','#FF6B00'],
+        ['Resultado antes da estética','Um site bonito que não converte não tem valor. Funcionalidade vem primeiro.','#FF6B00'],
+        ['Proximidade real','Você fala diretamente com quem executa. Sem intermediários, sem ruído.','#FF6B00'],
+        ['Sistemas, não serviços isolados','Cada entrega faz parte de um ecossistema maior que cresce junto com você.','#FF6B00'],
+      ].map(([h,p,c],i)=>`
+      <div class="reveal d${i+1}" style="background:#fff;border:1px solid rgba(0,0,0,0.07);border-radius:18px;padding:28px;border-top:3px solid ${c};">
+        <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;color:#0D0D0D;">${h}</div>
+        <p style="font-size:14px;color:#5A5A5A;margin-top:10px;line-height:1.65;">${p}</p>
+      </div>`).join('')}
+    </div>
+  </div>
+</section>
+${renderFooter()}
+`;}
+
+/* ══════════════════════════════════
+   CONTATO PAGE
+══════════════════════════════════ */
+function renderContato(){return`
+<section class="page-hero">
+  <div class="inner">
+    <p class="kicker load-0">Fale conosco</p>
+    <div style="width:0;height:2px;background:#FF6B00;margin:12px 0 20px;animation:lineW .8s var(--ease) .4s both;"></div>
+    <h1 class="page-h load-1">Vamos <span>conversar</span>.</h1>
+    <p class="page-sub load-2">Sem formulários genéricos. Você fala diretamente com Eduardo — a pessoa que vai trabalhar no seu projeto.</p>
+  </div>
+</section>
+
+<section style="padding:72px 40px;background:#0D0D0D;">
+  <div style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;">
+    <div class="reveal-l">
+      <p class="kicker">Diagnóstico gratuito</p>
+      <div class="section-line" style="width:60px;margin-top:10px;"></div>
+      <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:clamp(28px,3.5vw,42px);color:#F8F8F8;letter-spacing:-0.02em;line-height:1.1;margin-top:4px;">Vamos ver o que está te fazendo perder clientes.</h2>
+      <p style="font-size:16px;line-height:1.7;color:#C7C7C7;margin-top:16px;">Preencha o formulário e em até 24h Eduardo entra em contato com uma análise real do seu negócio digital.</p>
+      <div style="margin-top:36px;display:flex;flex-direction:column;gap:20px;">
+        ${[
+          [ICONS.mail,'contato@agenciacriativa.online','E-mail','mailto:contato@agenciacriativa.online'],
+          [ICONS.globe,'(16) 99750-5979','WhatsApp',WA_URL('Olá! Vim pelo site da Agência Criativa.')],
+          [ICONS.pin,'São Carlos · SP · Brasil','Localização','#'],
+        ].map(([ic,v,l,href])=>`
+        <div style="display:flex;align-items:center;gap:16px;">
+          <div style="width:44px;height:44px;border-radius:12px;background:rgba(255,107,0,0.1);display:flex;align-items:center;justify-content:center;color:#FF6B00;flex-shrink:0;">${icSvg(ic,20)}</div>
+          <div>
+            <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#9A9A9A;">${l}</div>
+            <a href="${href}" target="_blank" rel="noopener" style="font-size:15px;color:#F8F8F8;margin-top:3px;display:block;text-decoration:none;">${v}</a>
+          </div>
+        </div>`).join('')}
+        <a href="${WA_URL('Olá! Vim pelo site da Agência Criativa e gostaria de um diagnóstico gratuito do meu negócio.')}" target="_blank" rel="noopener"
+           style="display:flex;align-items:center;gap:10px;background:#25D366;color:#fff;border-radius:999px;padding:14px 22px;font-family:'Inter',sans-serif;font-weight:600;font-size:15px;text-decoration:none;margin-top:8px;box-shadow:0 8px 24px -8px rgba(37,211,102,0.5);transition:transform .2s;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+          Falar agora no WhatsApp →
+        </a>
+      </div>
+    </div>
+    <div class="reveal-r">
+      <div style="background:#141414;border:1px solid rgba(255,255,255,0.08);border-radius:24px;padding:36px;">
+        <div style="display:flex;flex-direction:column;gap:14px;">
+          ${[['text','Seu nome completo',''],['tel','WhatsApp com DDD',''],['url','Site ou Instagram do negócio',''],['text','Segmento / tipo de negócio','']].map(([t,ph])=>`
+          <input type="${t}" placeholder="${ph}" style="background:#0D0D0D;border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:14px 16px;color:#F8F8F8;font-family:'Inter',sans-serif;font-size:15px;outline:none;width:100%;transition:border-color .2s;" onfocus="this.style.borderColor='#FF6B00'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'"/>`).join('')}
+          <textarea placeholder="Conta um pouco sobre o que você precisa..." rows="4" style="background:#0D0D0D;border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:14px 16px;color:#F8F8F8;font-family:'Inter',sans-serif;font-size:15px;outline:none;width:100%;resize:vertical;transition:border-color .2s;" onfocus="this.style.borderColor='#FF6B00'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'"></textarea>
+          <button class="btn btn-primary" style="justify-content:center;font-size:15px;margin-top:4px;" onclick="submitContatoPage(this)">Enviar mensagem →</button>
+          <p style="font-size:12px;color:#6B6B6B;text-align:center;">Respondemos em até 24 horas úteis.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+${renderFooter()}
+`;}
+
+/* ══════════════════════════════════
+   O QUE FAZEMOS PAGE
+══════════════════════════════════ */
+function renderOQueFazemos(){return`
+<section class="page-hero">
+  <div class="inner">
+    <p class="kicker load-0">Quatro pilares</p>
+    <div style="width:0;height:2px;background:#FF6B00;margin:12px 0 20px;animation:lineW .8s var(--ease) .4s both;"></div>
+    <h1 class="page-h load-1">O que <span>fazemos</span>.</h1>
+    <p class="page-sub load-2">Um ecossistema completo de presença, conversão e automação — estruturado para gerar crescimento real e mensurável.</p>
+  </div>
+</section>
+
+<!-- VISION -->
+<section style="padding:80px 40px;background:#0D0D0D;border-top:1px solid rgba(255,255,255,0.06);">
+  <div style="max-width:var(--container);margin:0 auto;">
+    <div class="reveal">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:10px;">
+        <div style="width:42px;height:42px;border-radius:12px;background:rgba(255,107,0,0.12);display:flex;align-items:center;justify-content:center;color:#FF6B00;">${icSvg(ICONS.settings,22)}</div>
+        <p class="kicker" style="font-size:13px;">VISION</p>
+      </div>
+      <div class="section-line" style="width:60px;margin-bottom:20px;"></div>
+      <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:clamp(30px,4vw,50px);color:#F8F8F8;letter-spacing:-0.02em;line-height:1.05;">Automação, CRM &amp;<br/>Sistemas de Crescimento</h2>
+      <p style="font-size:17px;line-height:1.7;color:#C7C7C7;margin-top:18px;max-width:760px;">Criamos ecossistemas completos de aquisição, gestão e conversão de clientes através da metodologia proprietária VISION — nosso motor estratégico de crescimento digital.</p>
+      <p style="font-size:16px;line-height:1.7;color:#9A9A9A;margin-top:12px;max-width:760px;">Mais do que automações isoladas, desenvolvemos estruturas inteligentes que podem incluir:</p>
+    </div>
+    <ul class="check-list reveal" style="margin-top:28px;">
+      ${['CRM e gestão de leads personalizados','Automação comercial e operacional','Funis de vendas completos','Captação e nutrição de leads','Atendimento automatizado e humanizado','Sistemas de agendamento, relacionamento e pós-venda','Dashboards, relatórios e inteligência comercial','Integrações entre marketing, vendas e operação','Estruturas digitais escaláveis para múltiplos segmentos'].map(t=>`
+      <li><div class="ci"><div class="cd"></div></div>${t}</li>`).join('')}
+    </ul>
+    <div class="reveal" style="margin-top:28px;padding:22px 26px;border-radius:16px;border-left:3px solid #FF6B00;background:rgba(255,107,0,0.06);">
+      <p style="font-size:17px;font-weight:600;color:#F8F8F8;line-height:1.6;font-family:'Space Grotesk',sans-serif;">Não entregamos ferramentas. Construímos sistemas que aceleram vendas, economizam tempo e aumentam faturamento.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MARKETING -->
+<section style="padding:80px 40px;background:#F4F4F2;border-top:1px solid rgba(0,0,0,0.06);">
+  <div style="max-width:var(--container);margin:0 auto;">
+    <div class="reveal">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:10px;">
+        <div style="width:42px;height:42px;border-radius:12px;background:rgba(255,107,0,0.1);display:flex;align-items:center;justify-content:center;color:#FF6B00;">${icSvg(ICONS.barchart,22)}</div>
+        <p class="kicker kicker-dk" style="font-size:13px;">Marketing</p>
+      </div>
+      <div class="section-line" style="width:60px;margin-bottom:20px;"></div>
+      <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:clamp(30px,4vw,50px);color:#0D0D0D;letter-spacing:-0.02em;line-height:1.05;">Posicionamento Estratégico<br/>&amp; Crescimento</h2>
+      <p style="font-size:17px;line-height:1.7;color:#4A4A4A;margin-top:18px;max-width:760px;">Na Agência Criativa, marketing não significa apenas presença digital. Aplicamos a metodologia VISION para estruturar marcas, fortalecer autoridade e transformar atenção em vendas reais.</p>
+      <p style="font-size:16px;line-height:1.7;color:#7A7A7A;margin-top:12px;max-width:760px;">Nossa estratégia combina:</p>
+    </div>
+    <ul class="check-list check-list--dk reveal" style="margin-top:28px;">
+      ${['Branding estratégico','Copywriting de alta conversão','Presença forte em Google e redes sociais','Estruturação de funis comerciais','Estratégia de aquisição e retenção','Autoridade digital e posicionamento competitivo','Campanhas orientadas por performance'].map(t=>`
+      <li><div class="ci" style="background:rgba(255,107,0,0.12);"><div class="cd" style="background:#FF6B00;"></div></div>${t}</li>`).join('')}
+    </ul>
+    <div class="reveal" style="margin-top:28px;padding:22px 26px;border-radius:16px;border-left:3px solid #FF6B00;background:rgba(255,107,0,0.07);">
+      <p style="font-size:17px;font-weight:600;color:#0D0D0D;line-height:1.6;font-family:'Space Grotesk',sans-serif;">Não fazemos apenas marketing. Construímos posicionamento, percepção de valor e crescimento previsível.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUÇÃO -->
+<section style="padding:80px 40px;background:#0D0D0D;border-top:1px solid rgba(255,255,255,0.06);">
+  <div style="max-width:var(--container);margin:0 auto;">
+    <div class="reveal">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:10px;">
+        <div style="width:42px;height:42px;border-radius:12px;background:rgba(255,107,0,0.12);display:flex;align-items:center;justify-content:center;color:#FF6B00;">${icSvg(ICONS.photo,22)}</div>
+        <p class="kicker" style="font-size:13px;">Produção</p>
+      </div>
+      <div class="section-line" style="width:60px;margin-bottom:20px;"></div>
+      <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:clamp(30px,4vw,50px);color:#F8F8F8;letter-spacing:-0.02em;line-height:1.05;">Conteúdo Visual Estratégico</h2>
+      <p style="font-size:17px;line-height:1.7;color:#C7C7C7;margin-top:18px;max-width:760px;">Nosso olhar criativo transforma negócios em marcas memoráveis através de produção visual estratégica e orientada para conversão.</p>
+      <p style="font-size:16px;line-height:1.7;color:#9A9A9A;margin-top:12px;max-width:760px;">Criamos:</p>
+    </div>
+    <ul class="check-list reveal" style="margin-top:28px;">
+      ${['Fotografia comercial e institucional','Fotografia de produtos','Produção para redes sociais','Reels, vídeos curtos e campanhas publicitárias','Conteúdo para anúncios pagos','Cobertura visual corporativa','Materiais promocionais e institucionais','Direção criativa para presença digital'].map(t=>`
+      <li><div class="ci"><div class="cd"></div></div>${t}</li>`).join('')}
+    </ul>
+    <div class="reveal" style="margin-top:28px;padding:22px 26px;border-radius:16px;border-left:3px solid #FF6B00;background:rgba(255,107,0,0.06);">
+      <p style="font-size:17px;font-weight:600;color:#F8F8F8;line-height:1.6;font-family:'Space Grotesk',sans-serif;">Cada imagem, vídeo ou campanha é criada para fortalecer autoridade, gerar percepção premium e impulsionar vendas.</p>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTADOS -->
+<section style="padding:80px 40px;background:#F4F4F2;border-top:1px solid rgba(0,0,0,0.06);">
+  <div style="max-width:var(--container);margin:0 auto;">
+    <div class="reveal">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:10px;">
+        <div style="width:42px;height:42px;border-radius:12px;background:rgba(255,107,0,0.1);display:flex;align-items:center;justify-content:center;color:#FF6B00;">${icSvg(ICONS.trend,22)}</div>
+        <p class="kicker kicker-dk" style="font-size:13px;">Resultados</p>
+      </div>
+      <div class="section-line" style="width:60px;margin-bottom:20px;"></div>
+      <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:clamp(30px,4vw,50px);color:#0D0D0D;letter-spacing:-0.02em;line-height:1.05;">Mais visibilidade. Mais clientes.<br/>Mais autoridade. Mais <span style="color:#FF6B00;">faturamento.</span></h2>
+      <p style="font-size:17px;line-height:1.7;color:#4A4A4A;margin-top:18px;max-width:760px;">Mais do que serviços, entregamos crescimento real, estratégico e mensurável para empresas que querem dominar seu mercado.</p>
+      <p style="font-size:16px;font-weight:600;color:#7A7A7A;margin-top:20px;letter-spacing:.04em;text-transform:uppercase;font-size:12px;">Destaques:</p>
+    </div>
+    <ul class="check-list check-list--dk reveal" style="margin-top:16px;">
+      ${['Presença constante e estratégica nas redes sociais','Alcance orgânico e pago com foco em performance','Posicionamento real no Google e buscas locais','Autoridade de marca e percepção premium','Identidade visual profissional e consistente','Geração de leads qualificados','Funis de conversão estruturados','Atendimento humanizado e estratégico','Automação de processos comerciais','Economia de tempo operacional','Retenção e recorrência de clientes','Crescimento previsível e escalável','Estrutura digital completa','Relatórios e inteligência para tomada de decisão'].map(t=>`
+      <li><div class="ci" style="background:rgba(255,107,0,0.12);"><div class="cd" style="background:#FF6B00;"></div></div>${t}</li>`).join('')}
+    </ul>
+    <div class="reveal" style="margin-top:40px;display:flex;gap:12px;flex-wrap:wrap;">
+      <button class="btn btn-primary" id="oqf-cta">Quero esses resultados →</button>
+      <button class="btn btn-dark" onclick="setRoute('planos')">Ver planos</button>
+    </div>
+  </div>
+</section>
+
+${renderFooter()}
+`;}
+
+/* ══════════════════════════════════
+   FOOTER (shared)
+══════════════════════════════════ */
+function renderFooter(){return`
+<footer class="footer">
+  <div class="footer__grid">
+    <div class="footer__brand">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <img src="./assets/logo-mark.png" style="height:30px;filter:invert(1);mix-blend-mode:screen;" alt="Agência Criativa"/>
+        <span style="font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:16px;color:#F8F8F8;">Agência<span style="color:#FF6B00;"> Criativa</span></span>
+      </div>
+      <p>Estruturas digitais completas para negócios que querem crescer de verdade.</p>
+    </div>
+    <div class="footer__col">
+      <h4>Serviços</h4>
+      ${[['O que fazemos','o-que-fazemos'],['Sites','servicos'],['VISION','vision'],['Automação','servicos'],['Fotografia','servicos']].map(([l,r])=>`<a href="#" onclick="setRoute('${r}');return false;">${l}</a>`).join('')}
+    </div>
+    <div class="footer__col">
+      <h4>Empresa</h4>
+      ${[['Quem Somos','quem-somos'],['Planos','planos'],['VISION','vision'],['Contato','contato']].map(([l,r])=>`<a href="#" onclick="setRoute('${r}');return false;">${l}</a>`).join('')}
+    </div>
+    <div class="footer__col">
+      <h4>Contato</h4>
+      <a href="mailto:contato@agenciacriativa.online">contato@agenciacriativa.online</a>
+      <a href="https://wa.me/5516997505979" target="_blank" rel="noopener">(16) 99750-5979</a>
+      <a href="https://agenciacriativa.online">agenciacriativa.online</a>
+      <a href="#">São Carlos · SP</a>
+    </div>
+  </div>
+  <div class="footer__wm">agenciacriativa</div>
+  <div class="footer__bottom">
+    <span>© 2026 Agência Criativa</span>
+    <span>Tecnologia invisível. Resultado real.</span>
+  </div>
+</footer>`;}
+
+/* ══════════════════════════════════
+   PLAN BUILDER
+══════════════════════════════════ */
+const PLAN_GROUPS=[
+  {id:'mensal',label:'Mensais',sections:[
+    {id:'redes',ic:'📱',title:'Gestão de Redes Sociais',options:['2 Redes (Instagram + Facebook)','3 Redes + Google Meu Negócio','Gestão Completa (todas as redes)']},
+    {id:'conteudo',ic:'✍️',title:'Criação de Conteúdo',options:['8 Posts/mês','16 Posts/mês','24 Posts/mês']},
+    {id:'foto',ic:'📸',title:'Fotografia',options:['1 Sessão/mês (15 fotos)','2 Sessões/mês (30 fotos)','3 Sessões/mês (50 fotos)']},
+    {id:'video',ic:'🎥',title:'Vídeos',options:['4 Vídeos/mês (Reels)','8 Vídeos/mês (Reels + Depoimentos)']},
+    {id:'site',ic:'🌐',title:'Manutenção de Site',options:['Atualização Mensal do Site']},
+    {id:'ads',ic:'📊',title:'Tráfego Pago',options:['Meta Ads','Google Ads','Meta + Google Ads (completo)']},
+    {id:'gmn',ic:'🔍',title:'Google Meu Negócio',options:['Otimização + Respostas']},
+    {id:'extras',ic:'✨',title:'Adicionais',multi:true,options:['Cobertura de Evento/mês','Manutenção de Automações','Consultoria Mensal']},
+  ]},
+  {id:'unico',label:'Únicos',sections:[
+    {id:'proj',ic:'🚀',title:'Projetos',multi:true,options:['Site Profissional','Landing Page','Automação WhatsApp','Sistema Personalizado','Identidade Visual']},
+  ]},
+];
+let picks={},planTab='mensal';
+
+function renderPlanBuilder(){
+  const group=PLAN_GROUPS.find(g=>g.id===planTab);
+  const total=Object.values(picks).reduce((n,v)=>n+(Array.isArray(v)?v.length:(v?1:0)),0);
+  return`<div class="overlay" id="pb-overlay" onclick="if(event.target.id==='pb-overlay')closePB()">
+  <div class="modal modal--wide" onclick="event.stopPropagation()">
+    <div style="padding:26px 30px 0;display:flex;justify-content:space-between;align-items:flex-start;gap:24px;">
+      <div>
+        <p class="kicker">Monte seu plano</p>
+        <h3 style="font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:24px;color:#F8F8F8;margin-top:6px;letter-spacing:-0.02em;">Crie seu plano personalizado</h3>
+        <p style="font-size:13px;color:#9A9A9A;margin-top:5px;">Selecione os serviços. Pedimos a proposta sob medida ao final.</p>
+      </div>
+      <button class="modal__close" onclick="closePB()">✕</button>
+    </div>
+    <div class="pb-tabs">
+      ${PLAN_GROUPS.map(g=>`<button class="pb-tab${planTab===g.id?' active':''}" onclick="switchTab('${g.id}')">${g.label}</button>`).join('')}
+    </div>
+    <div class="pb-scroll">
+      ${group.sections.map(sec=>{
+        const picked=picks[sec.id];
+        return`<div style="margin-bottom:22px;">
+          <div style="display:flex;align-items:center;gap:9px;margin-bottom:10px;">
+            <span style="font-size:16px;">${sec.ic}</span>
+            <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14px;color:#F8F8F8;">${sec.title}</span>
+            ${sec.multi?'<span style="font-size:11px;color:#6B6B6B;">(múltiplos)</span>':''}
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            ${sec.options.map(opt=>{
+              const active=sec.multi?(picked||[]).includes(opt):picked===opt;
+              return`<button class="pb-pill${active?' active':''}" onclick="toggleP('${sec.id}','${opt.replace(/'/g,"\\'")}',${!!sec.multi})">${opt}</button>`;
+            }).join('')}
+          </div>
+        </div>`;
+      }).join('')}
+    </div>
+    <div class="pb-footer">
+      <div>
+        <div style="font-size:12px;color:#9A9A9A;">${total} ${total===1?'serviço':'serviços'} selecionado${total!==1?'s':''}</div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;color:#F8F8F8;margin-top:2px;">Seu plano sob medida</div>
+      </div>
+      <button class="btn btn-primary" style="font-size:14px;" ${total===0?'disabled style="opacity:.4;cursor:not-allowed;"':''}>Solicitar proposta →</button>
+    </div>
+  </div>
+</div>`;}
+
+window.switchTab=tab=>{planTab=tab;document.getElementById('pb-overlay').outerHTML=renderPlanBuilder();};
+window.toggleP=(sid,opt,multi)=>{
+  if(multi){const a=new Set(picks[sid]||[]);a.has(opt)?a.delete(opt):a.add(opt);picks[sid]=[...a];}
+  else{picks[sid]=picks[sid]===opt?null:opt;}
+  document.getElementById('pb-overlay').outerHTML=renderPlanBuilder();
+};
+window.closePB=()=>{const el=document.getElementById('pb-overlay');if(el)el.remove();};
+
+function openPB(){picks={};planTab='mensal';document.body.insertAdjacentHTML('beforeend',renderPlanBuilder());}
+
+/* ══════════════════════════════════
+   CONTACT MODAL
+══════════════════════════════════ */
+function openContact(){
+  document.body.insertAdjacentHTML('beforeend',`
+<div class="overlay" id="cm" onclick="if(event.target.id==='cm')this.remove()">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:22px;">
+      <p class="kicker">Diagnóstico gratuito</p>
+      <button class="modal__close" onclick="document.getElementById('cm').remove()">✕</button>
+    </div>
+    <h3 style="font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:24px;color:#F8F8F8;line-height:1.2;letter-spacing:-0.02em;">Vamos ver o que está te fazendo perder clientes.</h3>
+    <div style="display:flex;flex-direction:column;gap:12px;margin-top:22px;">
+      <input placeholder="Seu nome" style="background:#0D0D0D;border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:13px 15px;color:#F8F8F8;font-family:'Inter',sans-serif;font-size:14px;outline:none;width:100%;" onfocus="this.style.borderColor='#FF6B00'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'"/>
+      <input placeholder="WhatsApp com DDD" style="background:#0D0D0D;border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:13px 15px;color:#F8F8F8;font-family:'Inter',sans-serif;font-size:14px;outline:none;width:100%;" onfocus="this.style.borderColor='#FF6B00'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'"/>
+      <input placeholder="Site / Instagram do negócio" style="background:#0D0D0D;border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:13px 15px;color:#F8F8F8;font-family:'Inter',sans-serif;font-size:14px;outline:none;width:100%;" onfocus="this.style.borderColor='#FF6B00'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'"/>
+      <button class="btn btn-primary" style="justify-content:center;margin-top:4px;" onclick="submitContactModal(this)">Quero meu diagnóstico →</button>
+      <div style="display:flex;align-items:center;gap:10px;margin-top:6px;">
+        <div style="flex:1;height:1px;background:rgba(255,255,255,0.08);"></div>
+        <span style="font-size:12px;color:#6B6B6B;">ou fale direto</span>
+        <div style="flex:1;height:1px;background:rgba(255,255,255,0.08);"></div>
+      </div>
+      <a href="${WA_URL('Olá! Vim pelo site da Agência Criativa e gostaria de um diagnóstico gratuito.')}" target="_blank" rel="noopener"
+         style="display:flex;align-items:center;justify-content:center;gap:10px;background:#25D366;color:#fff;border:0;border-radius:999px;padding:13px 22px;font-family:'Inter',sans-serif;font-weight:600;font-size:14px;cursor:pointer;text-decoration:none;box-shadow:0 8px 24px -8px rgba(37,211,102,0.5);">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+        Falar no WhatsApp · (16) 99750-5979
+      </a>
+    </div>
+  </div>
+</div>`);}
+
+/* ══════════════════════════════════
+   MAIN RENDER
+══════════════════════════════════ */
+function bindCtasIn(scope){
+  scope.querySelectorAll('[id$="-cta"],[id^="hero-"],[id^="results-"],[id^="cta-"],[id^="plan-cta-"],[id^="unico-cta-"],[id^="planos-cta"],[id^="vision-page-"],[id^="quem-cta"],[id^="servicos-cta"],[id^="oqf-cta"]').forEach(el=>{
+    if(el.id==='plan-builder-cta'){el.addEventListener('click',openPB);return;}
+    if(el.id==='vision-cta'||el.id==='nav-vision-link'){el.addEventListener('click',()=>setRoute('vision'));return;}
+    el.addEventListener('click',openContact);
+  });
+}
+
+function render(){
+  const root=document.getElementById('root');
+  if(route==='home')           root.innerHTML=renderHome();
+  else if(route==='o-que-fazemos') root.innerHTML=renderOQueFazemos();
+  else if(route==='servicos')  root.innerHTML=renderServicos();
+  else if(route==='planos')    root.innerHTML=renderPlanos();
+  else if(route==='vision')    root.innerHTML=renderVision();
+  else if(route==='quem-somos')root.innerHTML=renderQuemSomos();
+  else if(route==='contato')   root.innerHTML=renderContato();
+  /* logo branca nas páginas com hero escuro; logo preta na home (hero claro esquerdo) */
+  navEl.classList.toggle('dark-hero', route!=='home');
+  applyNavTheme();
+  bindCtasIn(root);
+  updateNav();
+  raf(observe);
+}
+
+document.getElementById('plan-fab').addEventListener('click',openPB);
+render();
+</script>
+</body>
+</html>
