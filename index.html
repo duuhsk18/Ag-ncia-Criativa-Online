@@ -250,6 +250,28 @@ body{background:#0D0D0D;color:#F8F8F8;font-family:'Inter',system-ui,sans-serif;-
 .page-h{font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:clamp(40px,5.5vw,72px);letter-spacing:-0.03em;line-height:1.02;color:#F8F8F8;}
 .page-h span{color:#FF6B00;}
 .page-sub{font-size:18px;line-height:1.65;color:#C7C7C7;max-width:580px;margin-top:18px;}
+
+/* ── Portfolio ── */
+.pf-tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:48px;}
+.pf-tab{font-family:'Inter',sans-serif;font-size:13px;font-weight:600;padding:9px 22px;border-radius:999px;border:1.5px solid rgba(255,255,255,0.1);background:transparent;color:#9A9A9A;cursor:pointer;transition:all .2s var(--ease);}
+.pf-tab:hover{border-color:rgba(255,107,0,0.4);color:#F8F8F8;}
+.pf-tab.active{background:rgba(255,107,0,0.12);border-color:#FF6B00;color:#FF6B00;}
+.pf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:24px;margin-bottom:60px;}
+.pf-card{background:#141414;border:1px solid rgba(255,255,255,0.07);border-radius:20px;overflow:hidden;cursor:pointer;transition:transform .35s var(--ease),border-color .3s,box-shadow .3s;}
+.pf-card:hover{transform:translateY(-6px);border-color:#FF6B00;box-shadow:0 20px 60px -16px rgba(255,107,0,0.28);}
+.pf-card--hidden{display:none!important;}
+.pf-card__img{height:200px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:3.5rem;}
+.pf-card__body{padding:20px 22px;}
+.pf-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:4px 11px;border-radius:999px;margin-bottom:10px;}
+.pf-badge--niche{color:#FF6B00;background:rgba(255,107,0,0.1);}
+.pf-badge--live{color:#00E676;background:rgba(0,230,118,0.1);}
+.pf-badge--live::before{content:'';display:inline-block;width:6px;height:6px;border-radius:50%;background:#00E676;animation:pfblink 1.4s ease-in-out infinite;}
+@keyframes pfblink{0%,100%{opacity:1}50%{opacity:.25}}
+.pf-card__h{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:19px;color:#F8F8F8;margin-bottom:7px;}
+.pf-card__p{font-size:13.5px;color:#9A9A9A;line-height:1.6;margin-bottom:14px;}
+.pf-card__feats{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:16px;}
+.pf-feat{font-size:11.5px;padding:4px 10px;border-radius:9px;background:rgba(255,255,255,0.04);color:#C7C7C7;border:1px solid rgba(255,255,255,0.06);}
+.pf-card__actions{display:flex;gap:9px;}
 </style>
 </head>
 <body>
@@ -267,6 +289,7 @@ body{background:#0D0D0D;color:#F8F8F8;font-family:'Inter',system-ui,sans-serif;-
       <button class="nav__link" data-route="vision">VISION</button>
       <button class="nav__link" data-route="planos">Planos</button>
       <button class="nav__link" data-route="quem-somos">Quem Somos</button>
+      <button class="nav__link" data-route="portfolio">Portfólio</button>
       <button class="nav__link" data-route="contato">Contato</button>
       <button class="nav__cta" id="nav-cta">Falar com especialista →</button>
     </div>
@@ -326,6 +349,34 @@ async function saveLead(data){
 const WA_NUM = '5516997505979';
 const WA_URL = (msg='Olá! Vim pelo site da Agência Criativa e gostaria de saber mais.') =>
   `https://wa.me/${WA_NUM}?text=${encodeURIComponent(msg)}`;
+
+/* ── Portfolio data ── */
+const PF_MODELS = [
+  {id:'seguranca',cat:'servicos',icon:'🔒',tag:'Segurança',title:'Segurança Eletrônica',desc:'Site de autoridade para empresas de CFTV, alarmes e monitoramento residencial e comercial.',feats:['Landing Page','Catálogo de Serviços','Formulário de Orçamento'],url:'https://modelo-seguranca-eletronica.vercel.app/',live:true,grad:'135deg,#001E3C,#003A73',
+    about:'Site completo desenvolvido para empresas do setor de segurança eletrônica. Design sóbrio e autoritário que transmite confiança e credibilidade imediata.',
+    includes:['Hero section com call-to-action de impacto','Seção de serviços detalhada','Galeria de instalações e projetos','Formulário de solicitação de orçamento','Depoimentos de clientes','Integração com WhatsApp','Design 100% responsivo'],
+    ideal:['Empresas de CFTV e câmeras','Instaladores de alarmes','Empresas de monitoramento','Integradores de segurança']},
+  {id:'saude',cat:'saude',icon:'⚕️',tag:'Saúde',title:'Clínica Médica',desc:'Site completo para clínicas e consultórios médicos com agendamento online e listagem de convênios.',feats:['Agendamento Online','Convênios','Especialidades'],url:'#',live:false,grad:'135deg,#0D2B1F,#1A4A33',
+    about:'Plataforma completa para clínicas médicas e consultórios. Interface limpa e profissional que inspira confiança e facilita o agendamento online.',
+    includes:['Sistema de agendamento integrado','Listagem de especialidades','Informações sobre convênios','Perfil dos profissionais','Blog para conteúdo de saúde','Integração com WhatsApp','LGPD compliance'],
+    ideal:['Clínicas multiespecialidades','Consultórios médicos','Centros de saúde','Laboratórios de exames']},
+  {id:'educacao',cat:'educacao',icon:'📚',tag:'Educação',title:'Escola & Cursos',desc:'Plataforma educacional com catálogo de cursos, área de alunos e matrícula online.',feats:['Área do Aluno','Catálogo de Cursos','Matrícula Online'],url:'#',live:false,grad:'135deg,#0D1A2B,#162B44',
+    about:'Solução completa para instituições de ensino, escolas e plataformas de cursos online. Foco em conversão de matrículas e retenção de alunos.',
+    includes:['Catálogo de cursos com filtros','Sistema de matrícula online','Área do aluno','Calendário acadêmico','Galeria de eventos','Blog institucional','Integração com sistemas de pagamento'],
+    ideal:['Escolas de idiomas','Cursos profissionalizantes','Instituições de ensino','Plataformas EAD']},
+  {id:'construcao',cat:'servicos',icon:'🏗️',tag:'Construção',title:'Construtora',desc:'Showcase de projetos e portfólio para construtoras, incorporadoras e arquitetos.',feats:['Portfólio de Projetos','Formulário de Orçamento','Galeria Interativa'],url:'#',live:false,grad:'135deg,#1A1200,#3A2800',
+    about:'Site profissional para construtoras e escritórios de arquitetura apresentarem seus projetos com impacto visual e autoridade.',
+    includes:['Galeria de projetos com filtros','Formulário de orçamento','Calculadora de obras','Blog técnico','Depoimentos e certificações','Integração com mapas','Design premium'],
+    ideal:['Construtoras','Escritórios de arquitetura','Engenheiros civis','Incorporadoras']},
+  {id:'ecommerce',cat:'comercio',icon:'🛒',tag:'E-commerce',title:'Loja Virtual',desc:'E-commerce completo com catálogo, carrinho de compras e integração com gateway de pagamento.',feats:['Catálogo de Produtos','Carrinho','Gateway de Pagamento'],url:'#',live:false,grad:'135deg,#1A0D00,#3A1F00',
+    about:'Plataforma completa de e-commerce com todas as funcionalidades para vendas online de alto desempenho e conversão.',
+    includes:['Catálogo de produtos com filtros','Carrinho de compras','Gateway de pagamento','Painel administrativo','Gestão de estoque','Cupons de desconto','Rastreamento de pedidos'],
+    ideal:['Lojas de varejo','E-commerce de moda','Eletrônicos e tecnologia','Mercados especializados']},
+  {id:'juridico',cat:'servicos',icon:'⚖️',tag:'Advocacia',title:'Escritório Jurídico',desc:'Site institucional sóbrio e confiável para escritórios de advocacia com áreas de atuação e blog jurídico.',feats:['Áreas de Atuação','Perfil da Equipe','Blog Jurídico'],url:'#',live:false,grad:'135deg,#120D1A,#221530',
+    about:'Website profissional para escritórios de advocacia com design sóbrio, confiável e que transmite autoridade e credibilidade.',
+    includes:['Apresentação do escritório','Áreas de atuação detalhadas','Perfil dos advogados','Blog com artigos jurídicos','Formulário de consulta','Casos de sucesso','FAQ jurídico'],
+    ideal:['Escritórios de advocacia','Advogados autônomos','Consultorias jurídicas','Departamentos jurídicos']},
+];
 
 /* ── Formulário — modal de contato ── */
 window.submitContactModal = async function(btn){
@@ -607,6 +658,76 @@ function renderHome(){return`
           </div>
         </div>
       </div>`).join('')}
+    </div>
+  </div>
+</section>
+
+<!-- PORTFÓLIO POR NICHO (teaser) -->
+<section style="padding:80px 40px;background:#141414;border-top:1px solid rgba(255,255,255,0.06);">
+  <div style="max-width:var(--container);margin:0 auto;">
+    <div class="reveal" style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:20px;margin-bottom:44px;">
+      <div>
+        <p class="kicker">Portfólio por nicho</p>
+        <div class="section-line" style="width:60px;margin-top:12px;"></div>
+        <h2 class="sec-h" style="color:#F8F8F8;margin-top:4px;">Sites que falam<br/>a língua do <span style="color:#FF6B00;">seu mercado.</span></h2>
+        <p style="font-size:16px;color:#9A9A9A;margin-top:14px;max-width:520px;line-height:1.65;">Cada projeto nasce do zero — identidade, branding e estrutura adaptados ao segmento e ao público-alvo de cada cliente. Estes são exemplos de referência por nicho.</p>
+      </div>
+      <button class="btn btn-secondary" onclick="setRoute('portfolio')">Ver todos os nichos →</button>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;">
+
+      <!-- Segurança — AO VIVO -->
+      <div class="pf-card reveal d1" onclick="setRoute('portfolio')">
+        <div class="pf-card__img" style="background:linear-gradient(135deg,#001E3C,#003A73);">🔒</div>
+        <div class="pf-card__body">
+          <span class="pf-badge pf-badge--live">Ao vivo</span>
+          <div class="pf-card__h">Segurança Eletrônica</div>
+          <p class="pf-card__p">CFTV, alarmes e monitoramento. Design autoritário que transmite confiança imediata.</p>
+          <div class="pf-card__feats">
+            <span class="pf-feat">Landing Page</span>
+            <span class="pf-feat">Formulário de orçamento</span>
+          </div>
+          <div class="pf-card__actions" onclick="event.stopPropagation()">
+            <a href="https://modelo-seguranca-eletronica.vercel.app/" target="_blank" rel="noopener" class="btn btn-primary" style="flex:1;justify-content:center;font-size:13px;padding:10px 16px;">Ver demo →</a>
+            <button class="btn btn-secondary" style="font-size:13px;padding:10px 16px;" onclick="setRoute('portfolio')">Detalhes</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Saúde — Em breve -->
+      <div class="pf-card reveal d2" onclick="setRoute('portfolio')">
+        <div class="pf-card__img" style="background:linear-gradient(135deg,#0D2B1F,#1A4A33);">⚕️</div>
+        <div class="pf-card__body">
+          <span class="pf-badge pf-badge--niche">Saúde</span>
+          <div class="pf-card__h">Clínica Médica</div>
+          <p class="pf-card__p">Site completo para clínicas e consultórios com agendamento e convênios.</p>
+          <div class="pf-card__feats">
+            <span class="pf-feat">Agendamento Online</span>
+            <span class="pf-feat">Convênios</span>
+          </div>
+          <div class="pf-card__actions">
+            <button class="btn btn-secondary" style="flex:1;justify-content:center;font-size:13px;padding:10px 16px;opacity:.55;cursor:default;">Em desenvolvimento</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Construção — Em breve -->
+      <div class="pf-card reveal d3" onclick="setRoute('portfolio')">
+        <div class="pf-card__img" style="background:linear-gradient(135deg,#1A1200,#3A2800);">🏗️</div>
+        <div class="pf-card__body">
+          <span class="pf-badge pf-badge--niche">Construção</span>
+          <div class="pf-card__h">Construtora</div>
+          <p class="pf-card__p">Showcase de projetos e portfólio para construtoras e arquitetos.</p>
+          <div class="pf-card__feats">
+            <span class="pf-feat">Portfólio</span>
+            <span class="pf-feat">Orçamento</span>
+          </div>
+          <div class="pf-card__actions">
+            <button class="btn btn-secondary" style="flex:1;justify-content:center;font-size:13px;padding:10px 16px;opacity:.55;cursor:default;">Em desenvolvimento</button>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -1048,6 +1169,69 @@ ${renderFooter()}
 `;}
 
 /* ══════════════════════════════════
+   PORTFOLIO PAGE
+══════════════════════════════════ */
+function renderPortfolio(){return`
+<section class="page-hero">
+  <div class="inner">
+    <p class="kicker load-0">Portfólio</p>
+    <div style="width:0;height:2px;background:#FF6B00;margin:12px 0 20px;animation:lineW .8s var(--ease) .4s both;"></div>
+    <h1 class="page-h load-1">Projetos por <span>nicho</span>.</h1>
+    <p class="page-sub load-2">Cada site nasce do zero — branding, identidade e estrutura pensados para o segmento e o público-alvo de cada cliente. Estes são projetos de referência por área de atuação.</p>
+  </div>
+</section>
+
+<section style="padding:64px 40px 80px;background:#0D0D0D;">
+  <div style="max-width:var(--container);margin:0 auto;">
+
+    <div class="pf-tabs reveal">
+      ${[['Todos','all'],['Serviços','servicos'],['Saúde','saude'],['Educação','educacao'],['Comércio','comercio']].map(([label,cat])=>`
+      <button class="pf-tab${cat==='all'?' active':''}" onclick="pfFilter('${cat}',this)">${label}</button>`).join('')}
+    </div>
+
+    <div class="pf-grid" id="pf-grid">
+      ${PF_MODELS.map((m,i)=>`
+      <div class="pf-card reveal d${(i%4)+1}" data-pf-cat="${m.cat}" onclick="openPfModal('${m.id}')">
+        <div class="pf-card__img" style="background:linear-gradient(${m.grad});">${m.icon}</div>
+        <div class="pf-card__body">
+          ${m.live?`<span class="pf-badge pf-badge--live">Ao vivo</span>`:`<span class="pf-badge pf-badge--niche">${m.tag}</span>`}
+          <div class="pf-card__h">${m.title}</div>
+          <p class="pf-card__p">${m.desc}</p>
+          <div class="pf-card__feats">${m.feats.map(f=>`<span class="pf-feat">${f}</span>`).join('')}</div>
+          <div class="pf-card__actions" onclick="event.stopPropagation()">
+            ${m.live
+              ?`<a href="${m.url}" target="_blank" rel="noopener" class="btn btn-primary" style="flex:1;justify-content:center;font-size:13px;padding:10px 16px;">Ver demo →</a>`
+              :`<button class="btn btn-secondary" style="flex:1;justify-content:center;font-size:13px;padding:10px 16px;opacity:.55;cursor:default;">Em desenvolvimento</button>`
+            }
+            <button class="btn btn-secondary" style="font-size:13px;padding:10px 16px;" onclick="event.stopPropagation();openPfModal('${m.id}')">Detalhes</button>
+          </div>
+        </div>
+      </div>`).join('')}
+    </div>
+
+    <div class="reveal" style="text-align:center;padding:32px 24px;border-radius:20px;background:#141414;border:1px solid rgba(255,255,255,0.07);">
+      <p class="kicker" style="margin-bottom:8px;">Não encontrou seu nicho?</p>
+      <h3 style="font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:clamp(22px,3vw,32px);color:#F8F8F8;letter-spacing:-0.02em;margin-bottom:10px;">Construímos para qualquer segmento.</h3>
+      <p style="font-size:15px;color:#9A9A9A;max-width:540px;margin:0 auto 24px;line-height:1.65;">Estes são apenas exemplos de referência. Cada projeto real é desenvolvido do zero, adaptado à identidade e aos objetivos do seu negócio.</p>
+      <button class="btn btn-primary" id="pf-cta">Falar sobre meu projeto →</button>
+    </div>
+
+  </div>
+</section>
+
+<div class="cta-band reveal">
+  <div class="section-line" style="width:60px;margin:0 auto 20px;"></div>
+  <h2>Quer algo assim<br/>para o seu negócio?</h2>
+  <p>Cada site é desenvolvido do zero, com branding e estrutura exclusivos — pensados para converter visitantes em clientes.</p>
+  <div class="actions">
+    <button class="btn btn-primary" id="pf-cta2">Solicitar meu projeto →</button>
+    <button class="btn btn-dark" onclick="setRoute('planos')">Ver planos e preços</button>
+  </div>
+</div>
+${renderFooter()}
+`;}
+
+/* ══════════════════════════════════
    FOOTER (shared)
 ══════════════════════════════════ */
 function renderFooter(){return`
@@ -1066,7 +1250,7 @@ function renderFooter(){return`
     </div>
     <div class="footer__col">
       <h4>Empresa</h4>
-      ${[['Quem Somos','quem-somos'],['Planos','planos'],['VISION','vision'],['Contato','contato']].map(([l,r])=>`<a href="#" onclick="setRoute('${r}');return false;">${l}</a>`).join('')}
+      ${[['Quem Somos','quem-somos'],['Planos','planos'],['VISION','vision'],['Portfólio','portfolio'],['Contato','contato']].map(([l,r])=>`<a href="#" onclick="setRoute('${r}');return false;">${l}</a>`).join('')}
     </div>
     <div class="footer__col">
       <h4>Contato</h4>
@@ -1157,6 +1341,55 @@ window.closePB=()=>{const el=document.getElementById('pb-overlay');if(el)el.remo
 
 function openPB(){picks={};planTab='mensal';document.body.insertAdjacentHTML('beforeend',renderPlanBuilder());}
 
+/* ── Portfolio functions ── */
+window.pfFilter=function(cat,btn){
+  document.querySelectorAll('.pf-tab').forEach(t=>t.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  document.querySelectorAll('.pf-card[data-pf-cat]').forEach(card=>{
+    if(cat==='all'||card.dataset.pfCat===cat)card.classList.remove('pf-card--hidden');
+    else card.classList.add('pf-card--hidden');
+  });
+};
+
+window.openPfModal=function(id){
+  const m=PF_MODELS.find(x=>x.id===id);
+  if(!m)return;
+  document.body.insertAdjacentHTML('beforeend',`
+<div class="overlay" id="pf-mo" onclick="if(event.target.id==='pf-mo')closePfModal()">
+  <div class="modal" onclick="event.stopPropagation()" style="max-width:600px;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px;">
+      <div>
+        ${m.live?`<span class="pf-badge pf-badge--live" style="margin-bottom:8px;display:inline-flex;">Ao vivo</span>`:`<span class="pf-badge pf-badge--niche" style="margin-bottom:8px;display:inline-flex;">${m.tag}</span>`}
+        <h3 style="font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:26px;color:#F8F8F8;line-height:1.1;">${m.title}</h3>
+      </div>
+      <button class="modal__close" onclick="closePfModal()">✕</button>
+    </div>
+    <p style="font-size:15px;color:#C7C7C7;line-height:1.7;margin-bottom:22px;">${m.about}</p>
+    <div style="margin-bottom:18px;">
+      <p style="font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:#FF6B00;margin-bottom:10px;">O que está incluído</p>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:7px;">
+        ${m.includes.map(it=>`<li style="display:flex;align-items:flex-start;gap:10px;font-size:14px;color:#C7C7C7;line-height:1.5;"><div class="ci"><div class="cd"></div></div>${it}</li>`).join('')}
+      </ul>
+    </div>
+    <div style="margin-bottom:22px;">
+      <p style="font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:#FF6B00;margin-bottom:10px;">Ideal para</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        ${m.ideal.map(it=>`<span style="font-size:12px;padding:5px 12px;border-radius:999px;border:1px solid rgba(255,255,255,0.1);color:#C7C7C7;">${it}</span>`).join('')}
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;">
+      ${m.live
+        ?`<a href="${m.url}" target="_blank" rel="noopener" class="btn btn-primary" style="flex:1;justify-content:center;">Ver demonstração →</a>`
+        :`<button class="btn btn-secondary" style="flex:1;justify-content:center;opacity:.55;cursor:default;">Em desenvolvimento</button>`
+      }
+      <button class="btn btn-primary" style="flex:1;justify-content:center;" onclick="closePfModal();openContact()">Quero algo assim →</button>
+    </div>
+  </div>
+</div>`);
+};
+
+window.closePfModal=function(){const el=document.getElementById('pf-mo');if(el)el.remove();};
+
 /* ══════════════════════════════════
    CONTACT MODAL
 ══════════════════════════════════ */
@@ -1192,7 +1425,7 @@ function openContact(){
    MAIN RENDER
 ══════════════════════════════════ */
 function bindCtasIn(scope){
-  scope.querySelectorAll('[id$="-cta"],[id^="hero-"],[id^="results-"],[id^="cta-"],[id^="plan-cta-"],[id^="unico-cta-"],[id^="planos-cta"],[id^="vision-page-"],[id^="quem-cta"],[id^="servicos-cta"],[id^="oqf-cta"]').forEach(el=>{
+  scope.querySelectorAll('[id$="-cta"],[id^="hero-"],[id^="results-"],[id^="cta-"],[id^="plan-cta-"],[id^="unico-cta-"],[id^="planos-cta"],[id^="vision-page-"],[id^="quem-cta"],[id^="servicos-cta"],[id^="oqf-cta"],[id^="pf-cta"]').forEach(el=>{
     if(el.id==='plan-builder-cta'){el.addEventListener('click',openPB);return;}
     if(el.id==='vision-cta'||el.id==='nav-vision-link'){el.addEventListener('click',()=>setRoute('vision'));return;}
     el.addEventListener('click',openContact);
@@ -1208,6 +1441,7 @@ function render(){
   else if(route==='vision')    root.innerHTML=renderVision();
   else if(route==='quem-somos')root.innerHTML=renderQuemSomos();
   else if(route==='contato')   root.innerHTML=renderContato();
+  else if(route==='portfolio') root.innerHTML=renderPortfolio();
   /* logo branca nas páginas com hero escuro; logo preta na home (hero claro esquerdo) */
   navEl.classList.toggle('dark-hero', route!=='home');
   applyNavTheme();
