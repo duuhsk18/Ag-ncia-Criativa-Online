@@ -527,12 +527,12 @@ function renderHome(){return`
   </div>
   <div class="svc-grid reveal">
     ${[
-      ['monitor','Desenvolvimento','Sites de alta conversão','Landing pages, institucionais e sistemas pensados para gerar contato e fechar venda — não só "ficar bonitos".'],
-      ['zap','VISION','Automação & CRM','Não entregamos ferramentas. Construímos sistemas que aceleram vendas, economizam tempo e aumentam faturamento.'],
-      ['trend','Marketing','Posicionamento estratégico','Branding, copy de alta conversão e presença real no Google e Instagram. Não é "fazer post". É vender.'],
-      ['cam','Produção','Conteúdo visual','Fotografia comercial via MAGONFOTOGRAFIA, campanhas e material institucional com olhar criativo.'],
-    ].map(([ic,tag,h,p],i)=>`
-    <div class="svc-card d${i+1}">
+      ['monitor','Desenvolvimento','Sites de alta conversão','Landing pages, institucionais e sistemas pensados para gerar contato e fechar venda — não só "ficar bonitos".','portfolio'],
+      ['zap','VISION','Automação & CRM','Não entregamos ferramentas. Construímos sistemas que aceleram vendas, economizam tempo e aumentam faturamento.','vision'],
+      ['trend','Marketing','Posicionamento estratégico','Branding, copy de alta conversão e presença real no Google e Instagram. Não é "fazer post". É vender.','marketing'],
+      ['cam','Produção','Conteúdo visual','Fotografia comercial via MAGONFOTOGRAFIA, campanhas e material institucional com olhar criativo.','producao'],
+    ].map(([ic,tag,h,p,rt],i)=>`
+    <div class="svc-card d${i+1}" onclick="setRoute('${rt}')" title="Ver ${tag}"style="cursor:pointer;">
       <div class="svc-icon">${icon(ic)}</div>
       <div class="svc-tag">${tag}</div>
       <div class="svc-h">${h}</div>
@@ -678,7 +678,7 @@ function renderHome(){return`
 
       <!-- Segurança — AO VIVO -->
       <div class="pf-card reveal d1" onclick="setRoute('portfolio')">
-        <div class="pf-card__img" style="background:linear-gradient(135deg,#001E3C,#003A73);">🔒</div>
+        <div class="pf-card__img" style="background:linear-gradient(135deg,#001E3C,#003A73);"></div>
         <div class="pf-card__body">
           <span class="pf-badge pf-badge--live">Ao vivo</span>
           <div class="pf-card__h">Segurança Eletrônica</div>
@@ -696,7 +696,7 @@ function renderHome(){return`
 
       <!-- Saúde — Em breve -->
       <div class="pf-card reveal d2" onclick="setRoute('portfolio')">
-        <div class="pf-card__img" style="background:linear-gradient(135deg,#0D2B1F,#1A4A33);">⚕️</div>
+        <div class="pf-card__img" style="background:linear-gradient(135deg,#0D2B1F,#1A4A33);"></div>
         <div class="pf-card__body">
           <span class="pf-badge pf-badge--niche">Saúde</span>
           <div class="pf-card__h">Clínica Médica</div>
@@ -713,7 +713,7 @@ function renderHome(){return`
 
       <!-- Construção — Em breve -->
       <div class="pf-card reveal d3" onclick="setRoute('portfolio')">
-        <div class="pf-card__img" style="background:linear-gradient(135deg,#1A1200,#3A2800);">🏗️</div>
+        <div class="pf-card__img" style="background:linear-gradient(135deg,#1A1200,#3A2800);"></div>
         <div class="pf-card__body">
           <span class="pf-badge pf-badge--niche">Construção</span>
           <div class="pf-card__h">Construtora</div>
@@ -1169,6 +1169,202 @@ ${renderFooter()}
 `;}
 
 /* ══════════════════════════════════
+   MARKETING PAGE
+══════════════════════════════════ */
+function renderMarketing(){return`
+<section class="page-hero">
+  <div class="inner">
+    <p class="kicker load-0">Marketing estratégico</p>
+    <div style="width:0;height:2px;background:#FF6B00;margin:12px 0 20px;animation:lineW .8s var(--ease) .4s both;"></div>
+    <h1 class="page-h load-1">Marketing que <span>posiciona</span>.<br/>Estratégia que vende.</h1>
+    <p class="page-sub load-2">Não fazemos posts. Não gerenciamos redes. Construímos posicionamento estratégico que transforma atenção em autoridade — e autoridade em vendas reais.</p>
+  </div>
+</section>
+
+<section style="padding:80px 40px;background:#0D0D0D;border-top:1px solid rgba(255,255,255,0.06);">
+  <div style="max-width:var(--container);margin:0 auto;display:grid;grid-template-columns:1fr 1.4fr;gap:72px;align-items:start;">
+    <div class="reveal-l">
+      <p class="kicker">Nossa abordagem</p>
+      <div class="section-line" style="width:60px;margin-top:10px;"></div>
+      <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:clamp(30px,3.5vw,46px);color:#F8F8F8;letter-spacing:-0.02em;line-height:1.05;margin-top:4px;">Presença que<br/>gera resultado.</h2>
+      <p style="font-size:16px;line-height:1.7;color:#9A9A9A;margin-top:16px;">Marketing não é sobre estar presente — é sobre estar presente do jeito certo, para a pessoa certa, na hora certa. Aplicamos a metodologia VISION para garantir que cada ação gere resultado mensurável.</p>
+      <div style="margin-top:28px;padding:20px 24px;border-radius:16px;border-left:3px solid #FF6B00;background:rgba(255,107,0,0.06);">
+        <p style="font-size:16px;font-weight:600;color:#F8F8F8;line-height:1.6;font-family:'Space Grotesk',sans-serif;">Não fazemos apenas marketing. Construímos posicionamento, percepção de valor e crescimento previsível.</p>
+      </div>
+    </div>
+    <ul class="reveal-r" style="list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:0;">
+      ${['Branding estratégico e identidade visual','Copywriting de alta conversão','Gestão de redes sociais (Instagram, Facebook, TikTok)','Posicionamento no Google e Google Meu Negócio','Criação de conteúdo visual e editorial','Estruturação de funis de aquisição','Tráfego pago — Meta Ads e Google Ads','Estratégia de autoridade digital','Campanhas sazonais e de lançamento','Relatórios de performance e inteligência'].map(it=>`
+      <li style="display:flex;align-items:flex-start;gap:14px;padding:14px 18px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);">
+        <div class="ci"><div class="cd"></div></div>
+        <span style="font-size:14px;color:#C7C7C7;line-height:1.5;">${it}</span>
+      </li>`).join('')}
+    </ul>
+  </div>
+</section>
+
+<section style="padding:80px 40px;background:#F4F4F2;border-top:1px solid rgba(0,0,0,0.06);">
+  <div style="max-width:var(--container);margin:0 auto;">
+    <div class="reveal" style="margin-bottom:44px;">
+      <p class="kicker kicker-dk">Como trabalhamos</p>
+      <div class="section-line" style="width:60px;margin-top:10px;"></div>
+      <h2 class="sec-h" style="color:#0D0D0D;margin-top:4px;">Diagnóstico. Estratégia.<br/>Execução. Escala.</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;">
+      ${[
+        ['01','Diagnóstico','Análise completa do negócio, mercado, concorrência e presença atual para identificar oportunidades reais.'],
+        ['02','Estratégia','Plano de posicionamento personalizado com metas claras e ações definidas para cada canal e objetivo.'],
+        ['03','Execução','Produção e publicação de conteúdo estratégico, gestão de campanhas e otimização contínua de resultados.'],
+        ['04','Escala','Com dados em mãos, escalamos o que funciona e ajustamos a rota para crescimento previsível e sustentável.'],
+      ].map(([n,h,p],i)=>`
+      <div class="reveal d${i+1}" style="background:#fff;border:1px solid rgba(0,0,0,0.07);border-radius:18px;padding:28px;border-top:3px solid #FF6B00;">
+        <div style="font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:48px;color:rgba(255,107,0,0.12);line-height:1;margin-bottom:14px;">${n}</div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;color:#0D0D0D;margin-bottom:8px;">${h}</div>
+        <p style="font-size:14px;color:#5A5A5A;line-height:1.65;">${p}</p>
+      </div>`).join('')}
+    </div>
+  </div>
+</section>
+
+<section style="padding:72px 40px;background:#0D0D0D;border-top:1px solid rgba(255,255,255,0.06);">
+  <div style="max-width:860px;margin:0 auto;text-align:center;">
+    <div class="reveal">
+      <p class="kicker">Onde você vai aparecer</p>
+      <div class="section-line" style="width:60px;margin:10px auto 0;"></div>
+      <h2 class="sec-h" style="color:#F8F8F8;margin-top:16px;">Presença estratégica<br/>em todos os canais.</h2>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:36px;">
+        ${['Instagram','Facebook','TikTok','YouTube','LinkedIn','Google Meu Negócio','Meta Ads','Google Ads','WhatsApp Business','Reels & Stories','Blog & SEO','E-mail Marketing'].map(t=>`
+        <span style="font-size:13px;font-weight:600;padding:9px 20px;border-radius:999px;border:1px solid rgba(255,255,255,0.1);color:#C7C7C7;background:rgba(255,255,255,0.04);">${t}</span>`).join('')}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding:72px 40px;background:#F4F4F2;border-top:1px solid rgba(0,0,0,0.06);">
+  <div style="max-width:var(--container);margin:0 auto;">
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;text-align:center;">
+      ${[
+        ['+312%','média de crescimento de leads em 90 dias com estratégia integrada'],
+        ['3×','mais alcance orgânico com posicionamento editorial consistente'],
+        ['77%','economia vs. contratar especialistas separados de marketing'],
+      ].map(([n,l],i)=>`
+      <div class="reveal d${i+1}" style="padding:36px 24px;background:#fff;border-radius:18px;border:1px solid rgba(0,0,0,0.07);">
+        <div style="font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:54px;color:#FF6B00;letter-spacing:-0.03em;line-height:1;">${n}</div>
+        <p style="font-size:14px;color:#5A5A5A;margin-top:10px;line-height:1.55;">${l}</p>
+      </div>`).join('')}
+    </div>
+  </div>
+</section>
+
+<div class="cta-band reveal">
+  <div class="section-line" style="width:60px;margin:0 auto 20px;"></div>
+  <h2>Vamos construir sua<br/>presença estratégica?</h2>
+  <p>Diagnóstico gratuito de 30 minutos. Sem compromisso — com resultados reais.</p>
+  <div class="actions">
+    <button class="btn btn-primary" id="mkt-cta">Quero meu diagnóstico →</button>
+    <button class="btn btn-dark" onclick="setRoute('planos')">Ver planos</button>
+  </div>
+</div>
+${renderFooter()}
+`;}
+
+/* ══════════════════════════════════
+   PRODUÇÃO PAGE
+══════════════════════════════════ */
+function renderProducao(){return`
+<section class="page-hero">
+  <div class="inner">
+    <p class="kicker load-0">Produção visual · MAGONFOTOGRAFIA</p>
+    <div style="width:0;height:2px;background:#FF6B00;margin:12px 0 20px;animation:lineW .8s var(--ease) .4s both;"></div>
+    <h1 class="page-h load-1">Imagem que <span>para</span>.<br/>Conteúdo que vende.</h1>
+    <p class="page-sub load-2">Produção visual estratégica para marcas que querem se destacar. Da fotografia comercial aos Reels — cada entrega com olhar criativo e objetivo de conversão.</p>
+  </div>
+</section>
+
+<section style="padding:80px 40px;background:#0D0D0D;border-top:1px solid rgba(255,255,255,0.06);">
+  <div style="max-width:var(--container);margin:0 auto;display:grid;grid-template-columns:1fr 1.4fr;gap:72px;align-items:start;">
+    <div class="reveal-l">
+      <p class="kicker">Produção visual</p>
+      <div class="section-line" style="width:60px;margin-top:10px;"></div>
+      <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:clamp(30px,3.5vw,46px);color:#F8F8F8;letter-spacing:-0.02em;line-height:1.05;margin-top:4px;">Cada frame com<br/>intenção de vender.</h2>
+      <p style="font-size:16px;line-height:1.7;color:#9A9A9A;margin-top:16px;">Nosso olhar visual vem da MAGONFOTOGRAFIA — fotografia comercial aplicada à estratégia de marcas. Não entregamos fotos bonitas. Entregamos conteúdo que comunica valor, gera autoridade e converte.</p>
+      <div style="margin-top:24px;display:flex;align-items:center;gap:14px;padding:18px 22px;border-radius:14px;background:rgba(255,107,0,0.06);border:1px solid rgba(255,107,0,0.18);">
+        <div style="width:44px;height:44px;border-radius:12px;background:#FF6B00;display:flex;align-items:center;justify-content:center;flex-shrink:0;">${icSvg(ICONS.cam,20,'#0D0D0D')}</div>
+        <div>
+          <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14px;color:#F8F8F8;">MAGONFOTOGRAFIA</div>
+          <div style="font-size:12px;color:#9A9A9A;margin-top:2px;">Braço de produção visual da Agência Criativa</div>
+        </div>
+      </div>
+    </div>
+    <ul class="reveal-r" style="list-style:none;display:flex;flex-direction:column;gap:10px;">
+      ${['Fotografia comercial e institucional','Fotografia de produtos para e-commerce','Produção de conteúdo para redes sociais','Reels e vídeos curtos profissionais','Campanhas publicitárias e anúncios pagos','Cobertura visual de eventos corporativos','Materiais promocionais e institucionais','Direção criativa para presença digital'].map(it=>`
+      <li style="display:flex;align-items:flex-start;gap:14px;padding:14px 18px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);">
+        <div class="ci"><div class="cd"></div></div>
+        <span style="font-size:14px;color:#C7C7C7;line-height:1.5;">${it}</span>
+      </li>`).join('')}
+    </ul>
+  </div>
+</section>
+
+<section style="padding:80px 40px;background:#F4F4F2;border-top:1px solid rgba(0,0,0,0.06);">
+  <div style="max-width:var(--container);margin:0 auto;">
+    <div class="reveal" style="margin-bottom:44px;">
+      <p class="kicker kicker-dk">Tipos de entrega</p>
+      <div class="section-line" style="width:60px;margin-top:10px;"></div>
+      <h2 class="sec-h" style="color:#0D0D0D;margin-top:4px;">Do produto ao<br/>conteúdo estratégico.</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+      ${[
+        ['01','Produto','Fotos profissionais para e-commerce, catálogos e anúncios com foco total em conversão e destaque.'],
+        ['02','Institucional','Fotografia corporativa que transmite profissionalismo e gera confiança imediata no cliente.'],
+        ['03','Redes Sociais','Conteúdo visual estratégico para feed, stories e Reels — consistente com a identidade da marca.'],
+        ['04','Vídeo & Reels','Produção de vídeos curtos de alto impacto para Instagram, TikTok e YouTube.'],
+        ['05','Campanhas','Material visual completo para tráfego pago — criativo com alto CTR e alta conversão.'],
+        ['06','Eventos','Cobertura fotográfica de eventos corporativos, lançamentos e inaugurações.'],
+      ].map(([n,h,p],i)=>`
+      <div class="reveal d${(i%3)+1}" style="background:#fff;border:1px solid rgba(0,0,0,0.07);border-radius:18px;padding:26px;border-top:3px solid #FF6B00;">
+        <div style="font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:40px;color:rgba(255,107,0,0.12);line-height:1;margin-bottom:12px;">${n}</div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:17px;color:#0D0D0D;margin-bottom:8px;">${h}</div>
+        <p style="font-size:14px;color:#5A5A5A;line-height:1.65;">${p}</p>
+      </div>`).join('')}
+    </div>
+  </div>
+</section>
+
+<section style="padding:72px 40px;background:#0D0D0D;border-top:1px solid rgba(255,255,255,0.06);">
+  <div style="max-width:var(--container);margin:0 auto;">
+    <div class="reveal" style="text-align:center;max-width:720px;margin:0 auto 48px;">
+      <p class="kicker">Por que conteúdo visual importa</p>
+      <div class="section-line" style="width:60px;margin:10px auto 0;"></div>
+      <h2 class="sec-h" style="color:#F8F8F8;margin-top:16px;">Seu cliente decide<br/>em 3 segundos.</h2>
+      <p style="font-size:17px;line-height:1.7;color:#9A9A9A;margin-top:14px;">A qualidade visual é o primeiro julgamento que seu cliente faz sobre o valor do seu produto ou serviço.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;">
+      ${[
+        ['94%','mais engajamento em posts com imagem profissional vs. amador'],
+        ['3s','é o tempo que você tem para capturar a atenção de um visitante online'],
+        ['80%','dos consumidores dizem que o visual influencia diretamente a decisão de compra'],
+      ].map(([n,l],i)=>`
+      <div class="reveal d${i+1}" style="padding:32px 28px;border-radius:18px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);text-align:center;">
+        <div style="font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:52px;color:#FF6B00;letter-spacing:-0.03em;line-height:1;">${n}</div>
+        <p style="font-size:13.5px;color:#9A9A9A;margin-top:12px;line-height:1.6;">${l}</p>
+      </div>`).join('')}
+    </div>
+  </div>
+</section>
+
+<div class="cta-band reveal">
+  <div class="section-line" style="width:60px;margin:0 auto 20px;"></div>
+  <h2>Pronto para transformar<br/>sua presença visual?</h2>
+  <p>Agende uma sessão e veja o impacto do conteúdo profissional na percepção da sua marca.</p>
+  <div class="actions">
+    <button class="btn btn-primary" id="prod-cta">Agendar sessão →</button>
+    <button class="btn btn-dark" onclick="setRoute('planos')">Ver planos</button>
+  </div>
+</div>
+${renderFooter()}
+`;}
+
+/* ══════════════════════════════════
    PORTFOLIO PAGE
 ══════════════════════════════════ */
 function renderPortfolio(){return`
@@ -1192,7 +1388,7 @@ function renderPortfolio(){return`
     <div class="pf-grid" id="pf-grid">
       ${PF_MODELS.map((m,i)=>`
       <div class="pf-card reveal d${(i%4)+1}" data-pf-cat="${m.cat}" onclick="openPfModal('${m.id}')">
-        <div class="pf-card__img" style="background:linear-gradient(${m.grad});">${m.icon}</div>
+        <div class="pf-card__img" style="background:linear-gradient(${m.grad});"></div>
         <div class="pf-card__body">
           ${m.live?`<span class="pf-badge pf-badge--live">Ao vivo</span>`:`<span class="pf-badge pf-badge--niche">${m.tag}</span>`}
           <div class="pf-card__h">${m.title}</div>
@@ -1246,7 +1442,7 @@ function renderFooter(){return`
     </div>
     <div class="footer__col">
       <h4>Serviços</h4>
-      ${[['O que fazemos','o-que-fazemos'],['Sites','servicos'],['VISION','vision'],['Automação','servicos'],['Fotografia','servicos']].map(([l,r])=>`<a href="#" onclick="setRoute('${r}');return false;">${l}</a>`).join('')}
+      ${[['O que fazemos','o-que-fazemos'],['Sites & Portfólio','portfolio'],['VISION','vision'],['Marketing','marketing'],['Produção Visual','producao']].map(([l,r])=>`<a href="#" onclick="setRoute('${r}');return false;">${l}</a>`).join('')}
     </div>
     <div class="footer__col">
       <h4>Empresa</h4>
@@ -1441,6 +1637,8 @@ function render(){
   else if(route==='vision')    root.innerHTML=renderVision();
   else if(route==='quem-somos')root.innerHTML=renderQuemSomos();
   else if(route==='contato')   root.innerHTML=renderContato();
+  else if(route==='marketing') root.innerHTML=renderMarketing();
+  else if(route==='producao')  root.innerHTML=renderProducao();
   else if(route==='portfolio') root.innerHTML=renderPortfolio();
   /* logo branca nas páginas com hero escuro; logo preta na home (hero claro esquerdo) */
   navEl.classList.toggle('dark-hero', route!=='home');
